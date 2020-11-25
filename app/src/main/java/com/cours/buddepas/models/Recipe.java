@@ -4,14 +4,18 @@ import java.util.ArrayList;
 
 public class Recipe {
     private String name;
+    public String author;
     private String kind;
     private Integer peopleNumber;
     private Integer minutesDuration;
     private ArrayList<Ingredient> ingredientsArrayList;
     private ArrayList<Step> stepsArrayList;
 
-    public Recipe(String name, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList) {
+    public Recipe(){}
+
+    public Recipe(String name, String author, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList) {
         this.name = name;
+        this.author = author;
         this.kind = kind;
         this.peopleNumber = peopleNumber;
         this.minutesDuration = minutesDuration;
@@ -25,6 +29,14 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getKind() {

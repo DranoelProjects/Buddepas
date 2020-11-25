@@ -6,6 +6,8 @@ public class Ingredient {
     private String unit;
     private Integer price;
 
+    public Ingredient(){}
+
     public Ingredient(String name, Integer amount, String unit, Integer price) {
         this.name = name;
         this.amount = amount;
