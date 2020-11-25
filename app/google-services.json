@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "854879259882",
+    "firebase_url": "https://buddepas.firebaseio.com",
+    "project_id": "buddepas",
+    "storage_bucket": "buddepas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854879259882:android:bdd65d1fb70cc274521b93",
+        "android_client_info": {
+          "package_name": "com.cours.buddepas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854879259882-0pfti9j84pjfqpjpkqhvjvn68o9dgkha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cours.buddepas",
+            "certificate_hash": "816aed1c87162f72557acccd21d1fe3cc9bdf814"
+          }
+        },
+        {
+          "client_id": "854879259882-kudir8dr7qhk71i52n3m9kjvv4uk6k3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDT4PE129B9cS0_a70x5a53EGFRVKWhRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854879259882-kudir8dr7qhk71i52n3m9kjvv4uk6k3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
