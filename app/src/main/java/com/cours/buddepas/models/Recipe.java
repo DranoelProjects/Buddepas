@@ -3,6 +3,7 @@ package com.cours.buddepas.models;
 import java.util.ArrayList;
 
 public class Recipe {
+    private long id;
     private String name;
     public String author;
     private String kind;
@@ -13,7 +14,8 @@ public class Recipe {
 
     public Recipe(){}
 
-    public Recipe(String name, String author, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList) {
+    public Recipe(long id, String name, String author, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList) {
+        this.id = id;
         this.name = name;
         this.author = author;
         this.kind = kind;
@@ -21,6 +23,14 @@ public class Recipe {
         this.minutesDuration = minutesDuration;
         this.ingredientsArrayList = ingredientsArrayList;
         this.stepsArrayList = stepsArrayList;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

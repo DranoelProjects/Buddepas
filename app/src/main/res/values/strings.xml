@@ -4,5 +4,6 @@
     <string name="title_recipe">Recettes</string>
     <string name="title_calendar">Calendrier</string>
     <string name="title_shopping_list">Courses</string>
-    <string name="title_ingredients_list">Ingrédients</string>
+    <string name="title_ingredients_list">Stock</string>
+    <string name="sign_out">Déconnexion</string>
 </resources>

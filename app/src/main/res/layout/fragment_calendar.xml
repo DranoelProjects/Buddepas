@@ -20,15 +20,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_sign_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:enabled="false"
-        android:text="SignOut"
-        tools:layout_editor_absoluteX="289dp"
-        tools:layout_editor_absoluteY="226dp" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
