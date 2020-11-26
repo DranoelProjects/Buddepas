@@ -29,7 +29,6 @@ public class Singleton {
 
     public void setCurrentRecipe(Recipe currentRecipe) {
         this.currentRecipe = currentRecipe;
-        Log.d(TAG, currentRecipe.getAuthor());
     }
 
     public ArrayList<Recipe> getRecipesArrayList() {

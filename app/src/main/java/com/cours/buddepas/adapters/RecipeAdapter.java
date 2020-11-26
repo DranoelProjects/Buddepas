@@ -1,12 +1,10 @@
 package com.cours.buddepas.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cours.buddepas.R;
@@ -38,10 +36,6 @@ public class RecipeAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.recipe_adapter,null);
-
-        Log.d(TAG, "Id: " + recipesList.get(i).getId() + " name: " + recipesList.get(i).getName());
-        Log.d(TAG, "getCount : " + getCount());
-
 
         //get information about recipe
         Recipe currentRecipe=getItem(i);

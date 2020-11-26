@@ -44,52 +44,34 @@ public class RecipeFragment extends Fragment {
                 new ViewModelProvider(this).get(RecipeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipe, container, false);
         init(root);
-        /*final TextView textView = root.findViewById(R.id.title_recipe);
-        recipeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 
     private void init(View root){
         apiManager.GetAllRecipes();
         listView = root.findViewById(R.id.list_view_recipes);
-
         new LoadingRecipesListTask().execute();
     }
 
     class LoadingRecipesListTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
-            Log.d(TAG, "doInBackground");
             while(loading){
                 loading = singleton.isLoading();
             }
             recipesArrayList = singleton.getRecipesArrayList();
-
-            for(int i=0; i<recipesArrayList.size();i++){
-                Log.d(TAG, "Id: " + recipesArrayList.get(i).getId() + " name: " + recipesArrayList.get(i).getName());
-            }
             return "Task Completed.";
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d(TAG, "onPostExecute");
             listView.setAdapter(new RecipeAdapter(getActivity(), recipesArrayList));
         }
 
         @Override
-        protected void onPreExecute() {
-            Log.d(TAG, "onPreExecute");
-        }
+        protected void onPreExecute() { }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
-            Log.d(TAG, "onProgressUpdate");
-        }
+        protected void onProgressUpdate(Integer... values) { }
     }
 }

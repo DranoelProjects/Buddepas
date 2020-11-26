@@ -31,7 +31,6 @@ public class ApiManager {
 
     //Database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
 
     //Recipes
     long maxId = 0;
@@ -79,10 +78,6 @@ public class ApiManager {
                 for (DataSnapshot dataValues : dataSnapshot.getChildren()){
                     Recipe recipe = dataValues.getValue(Recipe.class);
                     recipesArrayList.add(recipe);
-                }
-
-                for(int i=0;i<recipesArrayList.size();i++){
-                    Log.d(TAG, "RecipeName = "+recipesArrayList.get(i).getName());
                 }
 
                 singleton.setRecipesArrayList((ArrayList<Recipe>) recipesArrayList);
