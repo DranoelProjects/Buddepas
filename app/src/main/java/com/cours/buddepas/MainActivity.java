@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
                         .setTheme(R.style.ThemeAuth)
                         .build(),
                 RC_SIGN_IN);
