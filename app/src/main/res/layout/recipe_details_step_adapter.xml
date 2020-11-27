@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/text_view_output_step_order"
         android:textColor="@color/black"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/size_list_view_text" />
 
