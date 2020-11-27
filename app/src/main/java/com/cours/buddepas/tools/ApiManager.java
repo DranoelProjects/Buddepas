@@ -71,7 +71,6 @@ public class ApiManager {
                     Recipe recipe = dataValues.getValue(Recipe.class);
                     recipesArrayList.add(recipe);
                 }
-
                 singleton.setRecipesArrayList((ArrayList<Recipe>) recipesArrayList);
                 singleton.setLoading(false);
             }
