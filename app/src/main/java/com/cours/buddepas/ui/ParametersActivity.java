@@ -42,7 +42,6 @@ public class ParametersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
         initUI();
-        singleton.setLoading(true);
         apiManager.GetUserData();
         new LoadingUserDataTask().execute();
     }
@@ -81,7 +80,7 @@ public class ParametersActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... params) {
             while(loading){
-                loading = singleton.isLoading();
+                loading = singleton.isLoadingUserData();
             }
             userData = singleton.getCurrentUserData();
             return "Task Completed.";

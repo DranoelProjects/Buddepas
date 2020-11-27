@@ -111,7 +111,7 @@ public class ApiManager {
     }
 
     public void GetUserData(){
-        singleton.setLoading(true);
+        singleton.setLoadingUserData(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = database.getReference("users/"+user.getUid());
         userRef.addValueEventListener(new ValueEventListener() {
@@ -119,7 +119,7 @@ public class ApiManager {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserData currentUserData = dataSnapshot.getValue(UserData.class);
                 singleton.setCurrentUserData(currentUserData);
-                singleton.setLoading(false);
+                singleton.setLoadingUserData(false);
             }
 
             @Override

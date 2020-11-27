@@ -15,6 +15,7 @@ public class Singleton {
     private Recipe currentRecipe;
     private ArrayList<Recipe> recipesArrayList = new ArrayList<>();
     private boolean loading = true;
+    private boolean loadingUserData = true;
     private UserData currentUserData;
 
     //Instance
@@ -57,5 +58,13 @@ public class Singleton {
 
     public void setCurrentUserData(UserData currentUserData) {
         this.currentUserData = currentUserData;
+    }
+
+    public boolean isLoadingUserData() {
+        return loadingUserData;
+    }
+
+    public void setLoadingUserData(boolean loadingUserData) {
+        this.loadingUserData = loadingUserData;
     }
 }

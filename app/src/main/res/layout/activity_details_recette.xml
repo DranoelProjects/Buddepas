@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/go_back_to_recipes_list"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="#00FFFFFF"
+            android:tint="@color/colorPrimary"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_backward_arrow"
+            android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/title"
@@ -137,46 +152,54 @@
         android:textColor="@color/colorPrimary"
         tools:ignore="MissingConstraints" />
 
-    <!-- INGREDIENT QUANTITY -->
-    <TextView
-        android:id="@+id/quantity"
+    <LinearLayout
+        android:id="@+id/linear_layout_steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ingredients"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:text="Quantité"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"
-        tools:ignore="MissingConstraints" />
+        android:orientation="horizontal">
 
-    <!-- INGREDIENT UNIT -->
-    <TextView
-        android:id="@+id/unit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ingredients"
-        android:layout_toRightOf="@id/quantity"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:text="Unité"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"
-        tools:ignore="MissingConstraints" />
+        <!-- INGREDIENT QUANTITY -->
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Quantité"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary" />
 
-    <!-- INGREDIENT NAME -->
-    <TextView
-        android:id="@+id/ingredient_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ingredients"
-        android:layout_toRightOf="@id/unit"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:text="Nom de l'ingrédient"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"
-        tools:ignore="MissingConstraints" />
+        <!-- INGREDIENT UNIT -->
+        <TextView
+            android:id="@+id/unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Unité"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- INGREDIENT NAME -->
+        <TextView
+            android:id="@+id/ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Nom de l'ingrédient"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- INGREDIENT PRICE -->
+        <TextView
+            android:id="@+id/ingredient_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/price"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
 
     <!-- LIST OF INGREDIENTS -->
     <androidx.recyclerview.widget.RecyclerView
@@ -185,8 +208,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="40dp"
-        android:layout_below="@id/ingredient_name"/>
-
+        android:layout_below="@id/linear_layout_steps"/>
 
     <!-- STEPS -->
     <TextView
@@ -238,7 +260,7 @@
         android:layout_marginLeft="40dp"
         android:layout_below="@id/order"/>
 
+    </RelativeLayout>
 
 
-
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

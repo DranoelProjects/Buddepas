@@ -37,7 +37,7 @@ public class InputRecipeStepAdapter extends RecyclerView.Adapter<InputRecipeStep
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.DescriptionListener.updatePosition(position);
-        holder.setIngredient(recipeStepsList.get(position), position);
+        holder.setStep(recipeStepsList.get(position), position);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class InputRecipeStepAdapter extends RecyclerView.Adapter<InputRecipeStep
             InputStepDescription.addTextChangedListener(DescriptionListener);
         }
 
-        public void setIngredient(final Step step, final int position) {
+        public void setStep(final Step step, final int position) {
             InputStepDescription.setText(step.getDescription());
             recipeStepOrder.setText(String.valueOf(position+1));
 
