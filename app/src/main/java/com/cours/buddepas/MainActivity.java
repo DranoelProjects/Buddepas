@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.cours.buddepas.tools.ApiManager;
+import com.cours.buddepas.ui.ParametersActivity;
+import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +33,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private final int RC_SIGN_IN = 7117;
     List<AuthUI.IdpConfig> providers;
-    Button btn_sign_out;
     private ApiManager apiManager = ApiManager.getInstance();
 
     @Override
@@ -50,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.PhoneBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
 
-        showSignInOptions();
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            showSignInOptions();
+        }
+
+        //Load User Data in Singleton
+        apiManager.GetUserData();
     }
 
     // create an action bar button
@@ -79,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        if (id == R.id.action_parameters) {
+            Intent myIntent = new Intent(MainActivity.this, ParametersActivity.class);
+            startActivity(myIntent);
         }
         return super.onOptionsItemSelected(item);
     }

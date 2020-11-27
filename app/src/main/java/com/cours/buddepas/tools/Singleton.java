@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
+import com.cours.buddepas.models.Step;
+import com.cours.buddepas.models.UserData;
+import com.firebase.ui.auth.data.model.User;
 
 import java.util.ArrayList;
 
@@ -12,6 +15,7 @@ public class Singleton {
     private Recipe currentRecipe;
     private ArrayList<Recipe> recipesArrayList = new ArrayList<>();
     private boolean loading = true;
+    private UserData currentUserData;
 
     //Instance
     private Singleton() {
@@ -45,5 +49,13 @@ public class Singleton {
 
     public void setLoading(boolean loading) {
         this.loading = loading;
+    }
+
+    public UserData getCurrentUserData() {
+        return currentUserData;
+    }
+
+    public void setCurrentUserData(UserData currentUserData) {
+        this.currentUserData = currentUserData;
     }
 }

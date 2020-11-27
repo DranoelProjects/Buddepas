@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.firebaseui:firebase-ui-auth:7.0.0'
+    implementation 'com.shawnlin:number-picker:2.4.6'
 }
 
 buildscript {

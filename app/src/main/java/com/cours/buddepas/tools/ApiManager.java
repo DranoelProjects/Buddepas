@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
+import com.cours.buddepas.models.UserData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,19 +38,7 @@ public class ApiManager {
     //Recipes
     long maxId = 0;
 
-    public void AddNewRecipe(Recipe recipe){
-        /*String name = "Couscous";
-        String author = "Léonard";
-        String kind = "Plat";
-        Integer peopleNumber = 4;
-        Integer minutesDuration = 60;
-        ArrayList<Ingredient> ingredientsArrayList = new ArrayList<>();
-        ArrayList<Step> stepsArrayList = new ArrayList<>();
-        ingredientsArrayList.add(new Ingredient("Cuisses de poulet", 6, "pièces", 5));
-        ingredientsArrayList.add(new Ingredient("Semoule", 1, "Kg", 2));
-        stepsArrayList.add(new Step("Cuir le poulet" ));
-        stepsArrayList.add(new Step("Cuir la semoule"));*/
-
+    public void InitRecipesMaxId(){
         //get following ID in order to increment it
         DatabaseReference recipeRef = database.getReference().child("recipes");
         recipeRef.addValueEventListener(new ValueEventListener() {
@@ -56,14 +47,15 @@ public class ApiManager {
                 if(snapshot.exists())
                     maxId=(snapshot.getChildrenCount());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-        //Recipe recipe = new Recipe(maxId+1, name, author, kind, peopleNumber, minutesDuration, ingredientsArrayList, stepsArrayList);
+    }
+    public void AddNewRecipe(Recipe recipe){
         //adding new recipe to database
+        DatabaseReference recipeRef = database.getReference().child("recipes");
+        recipe.setId(maxId+1);
         recipeRef.child(String.valueOf(maxId+1)).setValue(recipe);
     }
 
@@ -100,6 +92,33 @@ public class ApiManager {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Recipe currentRecipe = dataSnapshot.getValue(Recipe.class);
                 singleton.setCurrentRecipe(currentRecipe);
+                singleton.setLoading(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    public void SetUserData(UserData userData){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d(TAG, ""+user.getUid());
+        DatabaseReference userRef = database.getReference("users/"+user.getUid());
+        userRef.setValue(userData);
+    }
+
+    public void GetUserData(){
+        singleton.setLoading(true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = database.getReference("users/"+user.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserData currentUserData = dataSnapshot.getValue(UserData.class);
+                singleton.setCurrentUserData(currentUserData);
                 singleton.setLoading(false);
             }
 
