@@ -26,4 +26,5 @@
     <string name="username">Nom d\'utilisateur</string>
     <string name="submit_parameters">Modifier les paramètres</string>
     <string name="budget">Budget</string>
+    <string name="plat">Plat</string>
 </resources>

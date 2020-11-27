@@ -30,13 +30,15 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
     public InputRecipeIngredientAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.recipe_ingredient_adapter, parent, false);
-        return new MyViewHolder(view, new NameListener(), new UnitListener());
+        return new MyViewHolder(view, new NameListener(), new UnitListener(), new AmountListener(), new PriceListener());
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.NameListener.UpdatePosition(position);
         holder.UnitListener.UpdatePosition(position);
+        holder.PriceListener.UpdatePosition(position);
+        holder.AmountListener.UpdatePosition(position);
         holder.pos = position;
         holder.setIngredient(recipeIngredientsList.get(position), position);
     }
@@ -48,17 +50,21 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public EditText InputIngredientName;
-        com.shawnlin.numberpicker.NumberPicker inputIngredientAmount;
+        public EditText InputIngredientAmount;
+        public EditText InputIngredientPrice;
         public EditText InputIngredientUnit;
-        com.shawnlin.numberpicker.NumberPicker inputIngredientPrice;
         public NameListener NameListener;
         public UnitListener UnitListener;
+        public AmountListener AmountListener;
+        public PriceListener PriceListener;
         public int pos;
 
-        public MyViewHolder(@NonNull View itemView, NameListener nListener, UnitListener uListener) {
+        public MyViewHolder(@NonNull View itemView, NameListener nListener, UnitListener uListener, AmountListener aListener, PriceListener pListener) {
             super(itemView);
             this.NameListener = nListener;
             this.UnitListener = uListener;
+            this.AmountListener = aListener;
+            this.PriceListener = pListener;
 
             //Name
             InputIngredientName = itemView
@@ -66,16 +72,10 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
             InputIngredientName.addTextChangedListener(NameListener);
 
             //Amount
-            inputIngredientAmount = itemView
+            InputIngredientAmount = itemView
                     .findViewById(R.id.input_recipe_ingredient_amount);
-            inputIngredientAmount.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
-                    Ingredient newIngredient = recipeIngredientsList.get(pos);
-                    newIngredient.setAmount(picker.getValue());
-                    recipeIngredientsList.set(pos, newIngredient);
-                }
-            });
+            InputIngredientAmount.addTextChangedListener(AmountListener);
+
 
             //Unit
             InputIngredientUnit = itemView
@@ -83,27 +83,17 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
             InputIngredientUnit.addTextChangedListener(UnitListener);
 
             //Price
-            inputIngredientPrice = itemView
+            InputIngredientPrice = itemView
                     .findViewById(R.id.input_recipe_ingredient_price);
-            inputIngredientPrice.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
-                    Ingredient newIngredient = recipeIngredientsList.get(pos);
-                    newIngredient.setPrice(picker.getValue());
-                    recipeIngredientsList.set(pos, newIngredient);
-                }
-            });
+            InputIngredientPrice.addTextChangedListener(PriceListener);
+
         }
 
         public void setIngredient(final Ingredient ingredient, final int position) {
             InputIngredientName.setText(ingredient.getName());
-            if (ingredient.getAmount() != null) {
-                inputIngredientAmount.setValue(ingredient.getAmount());
-            }
+            InputIngredientAmount.setText(String.valueOf(ingredient.getAmount()));
             InputIngredientUnit.setText(ingredient.getUnit());
-            if (ingredient.getPrice() != null) {
-                inputIngredientPrice.setValue(ingredient.getPrice());
-            }
+            InputIngredientPrice.setText(String.valueOf(ingredient.getPrice()));
 
             //Init delete btn
             ImageButton deleteBtn = itemView.findViewById(R.id.delete_recipe_ingredient_button);
@@ -163,6 +153,52 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             Ingredient newIngredient = recipeIngredientsList.get(position);
             newIngredient.setUnit(charSequence.toString());
+            recipeIngredientsList.set(position, newIngredient);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    }
+
+    private class PriceListener implements TextWatcher {
+        private int position;
+
+        public void UpdatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            Ingredient newIngredient = recipeIngredientsList.get(position);
+            newIngredient.setPrice(Integer.valueOf(charSequence.toString()));
+            recipeIngredientsList.set(position, newIngredient);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    }
+
+    private class AmountListener implements TextWatcher {
+        private int position;
+
+        public void UpdatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            Ingredient newIngredient = recipeIngredientsList.get(position);
+            newIngredient.setAmount(Integer.valueOf(charSequence.toString()));
             recipeIngredientsList.set(position, newIngredient);
         }
 

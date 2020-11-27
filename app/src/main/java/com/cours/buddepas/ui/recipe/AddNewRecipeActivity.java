@@ -36,8 +36,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     private static androidx.recyclerview.widget.RecyclerView recyclerViewSteps;
     private EditText editTextRecipeName;
     private EditText editTextRecipeKind;
-    private com.shawnlin.numberpicker.NumberPicker npPeopleNumber;
-    private com.shawnlin.numberpicker.NumberPicker npDuration;
+    private EditText npPeopleNumber;
+    private EditText npDuration;
     private Button cancel;
     private Button submitRecipe;
     private ImageButton imageButtonNewIngredient;
@@ -135,7 +135,7 @@ public class AddNewRecipeActivity extends AppCompatActivity {
 
     private void submitRecipe(){
         String author = "Anonyme";
-        if(singleton.getCurrentUserData().getUsername() != null){
+        if(singleton.getCurrentUserData() != null && singleton.getCurrentUserData().getUsername() != null){
             author = singleton.getCurrentUserData().getUsername();
         }
 
@@ -144,8 +144,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
                 editTextRecipeName.getText().toString(),
                 author,
                 editTextRecipeKind.getText().toString(),
-                npPeopleNumber.getValue(),
-                npDuration.getValue(),
+                Integer.valueOf(npPeopleNumber.getText().toString()),
+                Integer.valueOf(npDuration.getText().toString()),
                 (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
                 (ArrayList) recipeStepAdapter.getRecipeStepsList()
         );
