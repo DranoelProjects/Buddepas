@@ -50,5 +50,4 @@ public class RecipeAdapter extends BaseAdapter {
         kind.setText(recipeKind);
         return view;
     }
-
 }

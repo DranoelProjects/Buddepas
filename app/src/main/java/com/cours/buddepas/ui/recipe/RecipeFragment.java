@@ -1,5 +1,6 @@
 package com.cours.buddepas.ui.recipe;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ public class RecipeFragment extends Fragment {
 
     //UI
     ListView listView;
+    TextView textViewLoading;
 
     //Recipes
     private boolean loading = true;
@@ -48,9 +52,20 @@ public class RecipeFragment extends Fragment {
     }
 
     private void init(View root){
+        textViewLoading = root.findViewById(R.id.recipe_loading);
         apiManager.GetAllRecipes();
         listView = root.findViewById(R.id.list_view_recipes);
         new LoadingRecipesListTask().execute();
+
+        //add new recipe button
+        ImageButton addNewRecipeButton = root.findViewById(R.id.add_new_recipe_button);
+        addNewRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getActivity(), AddNewRecipeActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     class LoadingRecipesListTask extends AsyncTask<Integer, Integer, String> {
@@ -66,6 +81,7 @@ public class RecipeFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             listView.setAdapter(new RecipeAdapter(getActivity(), recipesArrayList));
+            textViewLoading.setVisibility(View.INVISIBLE);
         }
 
         @Override
