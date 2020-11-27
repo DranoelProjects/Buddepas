@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
+import com.cours.buddepas.models.Step;
 
 import java.util.ArrayList;
 

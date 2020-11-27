@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cours.buddepas.R;
+import com.cours.buddepas.adapters.InputRecipeIngredientAdapter;
+import com.cours.buddepas.adapters.InputRecipeStepAdapter;
 import com.cours.buddepas.adapters.RecipeAdapter;
 import com.cours.buddepas.adapters.RecipeIngredientAdapter;
 import com.cours.buddepas.adapters.RecipeStepAdapter;
@@ -30,8 +35,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     private String TAG = "AddNewRecipeActivity";
 
     //UI
-    private ListView listViewIngredients;
-    private ListView listViewSteps;
+    private static androidx.recyclerview.widget.RecyclerView recyclerViewIngredients;
+    private static androidx.recyclerview.widget.RecyclerView recyclerViewSteps;
     private EditText editTextRecipeName;
     private EditText editTextRecipeKind;
     private com.shawnlin.numberpicker.NumberPicker npPeopleNumber;
@@ -44,8 +49,10 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     //init form
     private ArrayList<Ingredient> ingredientsArrayList = new ArrayList();
     private ArrayList<Step> stepsArrayList = new ArrayList();
-    private RecipeIngredientAdapter recipeIngredientAdapter;
-    private RecipeStepAdapter recipeStepAdapter;
+    private InputRecipeIngredientAdapter recipeIngredientAdapter;
+    private InputRecipeStepAdapter recipeStepAdapter;
+    private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
+    private RecyclerView.LayoutManager recipeStepsLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +62,9 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     }
 
     private void initUI(){
-        listViewIngredients = findViewById(R.id.list_view_input_recipe_ingredients);
-        listViewSteps = findViewById(R.id.list_view_input_recipe_steps);
+        //findView
+        recyclerViewIngredients = findViewById(R.id.recycler_view_input_recipe_ingredients);
+        recyclerViewSteps = findViewById(R.id.recycler_view_input_recipe_steps);
         editTextRecipeName = findViewById(R.id.input_recipe_name);
         editTextRecipeKind = findViewById(R.id.input_recipe_kind);
         npPeopleNumber = findViewById(R.id.input_people_number);
@@ -66,17 +74,26 @@ public class AddNewRecipeActivity extends AppCompatActivity {
         imageButtonNewIngredient = findViewById(R.id.add_new_recipe_ingredient_button);
         imageButtonNewStep = findViewById(R.id.add_new_recipe_step_button);
 
-        //init lists view
+        //init recyclers view
+        recipeIngredientsLayoutManager = new LinearLayoutManager(this);
+        recipeStepsLayoutManager = new LinearLayoutManager(this);
+        recyclerViewIngredients.setLayoutManager(recipeIngredientsLayoutManager);
+        recyclerViewSteps.setLayoutManager(recipeStepsLayoutManager);
+        recipeIngredientAdapter = new InputRecipeIngredientAdapter();
+        recipeStepAdapter = new InputRecipeStepAdapter();
+        recyclerViewIngredients.setAdapter(recipeIngredientAdapter);
+        recyclerViewSteps.setAdapter(recipeStepAdapter);
+
+        //init new recipe
+        Recipe recipe = new Recipe();
         ingredientsArrayList.add(new Ingredient());
         ingredientsArrayList.add(new Ingredient());
         stepsArrayList.add(new Step());
         stepsArrayList.add(new Step());
-        listViewIngredients.setItemsCanFocus(true);
-        listViewSteps.setItemsCanFocus(true);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(this, ingredientsArrayList);
-        recipeStepAdapter = new RecipeStepAdapter(this, stepsArrayList);
-        listViewIngredients.setAdapter(recipeIngredientAdapter);
-        listViewSteps.setAdapter(recipeStepAdapter);
+        recipeIngredientAdapter.setRecipeIngredientsList(ingredientsArrayList);
+        recipeStepAdapter.setRecipeStepsList(stepsArrayList);
+        recipe.setIngredientsArrayList(ingredientsArrayList);
+        recipe.setStepsArrayList(stepsArrayList);
 
         //Init buttons
         //cancel action
@@ -108,5 +125,13 @@ public class AddNewRecipeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static void RemoveIngredient(int position){
+        recyclerViewIngredients.removeViewAt(position);
+    }
+
+    public static void RemoveStep(int position){
+        recyclerViewSteps.removeViewAt(position);
     }
 }

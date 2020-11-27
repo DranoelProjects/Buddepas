@@ -16,4 +16,10 @@
     <string name="steps">Étapes</string>
     <string name="cancel">Annuler</string>
     <string name="add_recipe">Ajouter la recette</string>
+    <string name="amount">Quantité</string>
+    <string name="unit">Unité</string>
+    <string name="ingredient_name">Nom de l\'ingrédient</string>
+    <string name="price">Prix</string>
+    <string name="order">Ordre</string>
+    <string name="description">Description</string>
 </resources>
