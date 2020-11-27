@@ -1,11 +1,13 @@
 package com.cours.buddepas.ui.recipe;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,6 +68,14 @@ public class RecipeFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             listView.setAdapter(new RecipeAdapter(getActivity(), recipesArrayList));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent myIntent = new Intent(getActivity(), RecipeDetailsActivity.class);
+                    myIntent.putExtra("RecipeId", recipesArrayList.get(i).getId());
+                    startActivity(myIntent);
+                }
+            });
         }
 
         @Override

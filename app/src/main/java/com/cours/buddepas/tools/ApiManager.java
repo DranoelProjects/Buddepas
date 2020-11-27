@@ -93,12 +93,14 @@ public class ApiManager {
     }
 
     public void GetRecipe(long id){
+        singleton.setLoading(true);
         DatabaseReference recipeRef = database.getReference("recipes/"+id);
         recipeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Recipe currentRecipe = dataSnapshot.getValue(Recipe.class);
                 singleton.setCurrentRecipe(currentRecipe);
+                singleton.setLoading(false);
             }
 
             @Override
