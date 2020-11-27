@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.PhoneBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
 
-        showSignInOptions();
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            showSignInOptions();
+        }
     }
 
     // create an action bar button

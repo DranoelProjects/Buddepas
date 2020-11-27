@@ -24,9 +24,8 @@
 
     <EditText
         android:id="@+id/input_recipe_ingredient_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:minWidth="40dp"
         android:layout_toRightOf="@id/input_recipe_ingredient_amount"
         android:textSize="@dimen/normal_text_size"
         android:layout_toEndOf="@id/input_recipe_ingredient_amount"

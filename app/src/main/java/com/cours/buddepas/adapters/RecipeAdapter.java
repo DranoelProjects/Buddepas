@@ -15,7 +15,6 @@ import java.util.List;
 public class RecipeAdapter extends BaseAdapter {
     private List<Recipe> recipesList;
     private LayoutInflater inflater;
-    private String TAG = "RecipeAdapter";
 
     public RecipeAdapter(Context context, List<Recipe> recipesList){
         this.recipesList = recipesList;

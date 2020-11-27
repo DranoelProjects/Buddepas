@@ -2,24 +2,22 @@ package com.cours.buddepas.ui.recipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.InputRecipeIngredientAdapter;
 import com.cours.buddepas.adapters.InputRecipeStepAdapter;
-import com.cours.buddepas.adapters.RecipeAdapter;
-import com.cours.buddepas.adapters.RecipeIngredientAdapter;
-import com.cours.buddepas.adapters.RecipeStepAdapter;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
@@ -31,8 +29,6 @@ import java.util.ArrayList;
 public class AddNewRecipeActivity extends AppCompatActivity {
     //Instances
     private ApiManager apiManager = ApiManager.getInstance();
-    private Singleton singleton = Singleton.getInstance();
-    private String TAG = "AddNewRecipeActivity";
 
     //UI
     private static androidx.recyclerview.widget.RecyclerView recyclerViewIngredients;
@@ -59,6 +55,7 @@ public class AddNewRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         initUI();
+        apiManager.InitRecipesMaxId();
     }
 
     private void initUI(){
@@ -86,8 +83,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
 
         //init new recipe
         Recipe recipe = new Recipe();
-        ingredientsArrayList.add(new Ingredient());
-        ingredientsArrayList.add(new Ingredient());
+        ingredientsArrayList.add(new Ingredient("",2,"kg",2));
+        ingredientsArrayList.add(new Ingredient("",2,"kg",2));
         stepsArrayList.add(new Step());
         stepsArrayList.add(new Step());
         recipeIngredientAdapter.setRecipeIngredientsList(ingredientsArrayList);
@@ -107,7 +104,7 @@ public class AddNewRecipeActivity extends AppCompatActivity {
         submitRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "send new recipe");
+                submitRecipe();
             }
         });
 
@@ -133,5 +130,30 @@ public class AddNewRecipeActivity extends AppCompatActivity {
 
     public static void RemoveStep(int position){
         recyclerViewSteps.removeViewAt(position);
+    }
+
+    private void submitRecipe(){
+
+        Recipe newRecipe = new Recipe(
+                0,
+                editTextRecipeName.getText().toString(),
+                "Léonard",
+                editTextRecipeKind.getText().toString(),
+                npPeopleNumber.getValue(),
+                npDuration.getValue(),
+                (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
+                (ArrayList) recipeStepAdapter.getRecipeStepsList()
+        );
+        apiManager.AddNewRecipe(newRecipe);
+        Toast.makeText(AddNewRecipeActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent myIntent = new Intent(AddNewRecipeActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        }, 2000);
     }
 }
