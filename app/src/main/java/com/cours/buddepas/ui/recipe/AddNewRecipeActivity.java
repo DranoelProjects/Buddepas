@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class AddNewRecipeActivity extends AppCompatActivity {
     //Instances
     private ApiManager apiManager = ApiManager.getInstance();
+    private Singleton singleton = Singleton.getInstance();
 
     //UI
     private static androidx.recyclerview.widget.RecyclerView recyclerViewIngredients;
@@ -133,11 +134,15 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     }
 
     private void submitRecipe(){
+        String author = "Anonyme";
+        if(singleton.getCurrentUserData().getUsername() != null){
+            author = singleton.getCurrentUserData().getUsername();
+        }
 
         Recipe newRecipe = new Recipe(
                 0,
                 editTextRecipeName.getText().toString(),
-                "Léonard",
+                author,
                 editTextRecipeKind.getText().toString(),
                 npPeopleNumber.getValue(),
                 npDuration.getValue(),

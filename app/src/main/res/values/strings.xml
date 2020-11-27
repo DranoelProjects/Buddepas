@@ -22,4 +22,8 @@
     <string name="price">Prix</string>
     <string name="order">Ordre</string>
     <string name="description">Description</string>
+    <string name="title_parameters">Paramètres</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="submit_parameters">Modifier les paramètres</string>
+    <string name="budget">Budget</string>
 </resources>

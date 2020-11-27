@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/go_back_to_main_activity"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="#00FFFFFF"
+        android:tint="@color/colorPrimary"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_backward_arrow"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/title_parameters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/title_parameters"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/title" />
+
+    <TextView
+        android:id="@+id/ask_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/normal_text_size"
+        android:layout_below="@id/title_parameters"/>
+
+    <EditText
+        android:id="@+id/input_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ask_username"
+        android:textSize="@dimen/normal_text_size" />
+
+    <TextView
+        android:id="@+id/ask_budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/budget"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/normal_text_size"
+        android:layout_below="@id/input_username"/>
+
+    <EditText
+        android:id="@+id/input_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ask_budget"
+        android:textSize="@dimen/normal_text_size" />
+
+    <Button
+        android:id="@+id/submit_parameters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/input_budget"
+        android:text="@string/submit_parameters"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/loading_user_data"
+        android:layout_width="match_parent"
+        android:layout_below="@id/submit_parameters"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/loading"
+        android:textColor="@color/green"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:gravity="center_horizontal" />
+
+</RelativeLayout>
