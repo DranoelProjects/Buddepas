@@ -25,6 +25,7 @@ import com.cours.buddepas.adapters.RecipeAdapter;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,24 @@ public class RecipeFragment extends Fragment {
         apiManager.GetAllRecipes();
         listView = root.findViewById(R.id.list_view_recipes);
         new LoadingRecipesListTask().execute();
+        Button okbutton = (Button) root.findViewById(R.id.searchok);
+        okbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
+                String filter = ((TextInputEditText) v.getRootView().findViewById(R.id.searchrecipebar)).getText().toString();
+                singleton.filter(filter);
+                new LoadingRecipesListTask().execute();
+            }
+        });
+
+        Button cancelbutton = (Button) root.findViewById(R.id.searchcancel);
+        cancelbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                singleton.cancelFilter();
+                new LoadingRecipesListTask().execute();
+            }
+        });
         //add new recipe button
         ImageButton addNewRecipeButton = root.findViewById(R.id.add_new_recipe_button);
         addNewRecipeButton.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +85,10 @@ public class RecipeFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
+    }
+
+    public void onSearch(View view) {
+
     }
 
     class LoadingRecipesListTask extends AsyncTask<Integer, Integer, String> {
