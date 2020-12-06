@@ -1,6 +1,7 @@
 package com.cours.buddepas.models;
 
 public class Ingredient {
+    private String kind;
     private String name;
     private Integer amount;
     private String unit;
@@ -8,7 +9,8 @@ public class Ingredient {
 
     public Ingredient(){}
 
-    public Ingredient(String name, Integer amount, String unit, Integer price) {
+    public Ingredient(String kind, String name, Integer amount, String unit, Integer price) {
+        this.kind = kind;
         this.name = name;
         this.amount = amount;
         this.unit = unit;
@@ -45,5 +47,13 @@ public class Ingredient {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 }

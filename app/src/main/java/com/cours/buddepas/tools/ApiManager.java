@@ -74,7 +74,6 @@ public class ApiManager {
                 singleton.setRecipesArrayList((ArrayList<Recipe>) recipesArrayList);
                 singleton.setLoading(false);
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -93,7 +92,6 @@ public class ApiManager {
                 singleton.setCurrentRecipe(currentRecipe);
                 singleton.setLoading(false);
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -120,7 +118,6 @@ public class ApiManager {
                 singleton.setCurrentUserData(currentUserData);
                 singleton.setLoadingUserData(false);
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value

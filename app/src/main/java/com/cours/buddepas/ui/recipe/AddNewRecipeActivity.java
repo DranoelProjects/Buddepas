@@ -84,8 +84,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
 
         //init new recipe
         Recipe recipe = new Recipe();
-        ingredientsArrayList.add(new Ingredient("",2,"kg",2));
-        ingredientsArrayList.add(new Ingredient("",2,"kg",2));
+        ingredientsArrayList.add(new Ingredient("Viande", "",2,"kg",2));
+        ingredientsArrayList.add(new Ingredient("Féculent","",2,"kg",2));
         stepsArrayList.add(new Step());
         stepsArrayList.add(new Step());
         recipeIngredientAdapter.setRecipeIngredientsList(ingredientsArrayList);
