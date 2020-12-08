@@ -14,9 +14,11 @@ public class Singleton {
     private String TAG = "Singleton";
     private Recipe currentRecipe;
     private ArrayList<Recipe> recipesArrayList = new ArrayList<>();
+    private ArrayList<Recipe> filteredArrayList = new ArrayList<>();
     private boolean loading = true;
     private boolean loadingUserData = true;
     private UserData currentUserData;
+    private boolean filtered = false;
 
     //Instance
     private Singleton() {
@@ -37,6 +39,10 @@ public class Singleton {
     }
 
     public ArrayList<Recipe> getRecipesArrayList() {
+        if (filtered)
+        {
+            return filteredArrayList;
+        }
         return recipesArrayList;
     }
 
@@ -66,5 +72,35 @@ public class Singleton {
 
     public void setLoadingUserData(boolean loadingUserData) {
         this.loadingUserData = loadingUserData;
+    }
+
+    public void filter(String filter) {
+        filteredArrayList = new ArrayList<>();
+        String[] filters = filter.split(" ");
+        for (int i = 0; i < recipesArrayList.size();i++)
+        {
+            if (isValid(filters,recipesArrayList.get(i).getName()))
+            {
+                filteredArrayList.add(recipesArrayList.get(i));
+            }
+        }
+        filtered = true;
+    }
+
+    public void cancelFilter()
+    {
+        filtered = false;
+    }
+
+    boolean isValid(String[] filters,String recipe)
+    {
+        for (int i = 0; i < filters.length; i++)
+        {
+            if (!recipe.toLowerCase().contains(filters[i].toLowerCase()))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

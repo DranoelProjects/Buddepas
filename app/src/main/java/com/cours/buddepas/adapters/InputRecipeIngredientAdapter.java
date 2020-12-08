@@ -111,7 +111,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
     }
 
     public void AddNewIngredient(){
-        recipeIngredientsList.add(new Ingredient("",2,"kg",2));
+        recipeIngredientsList.add(new Ingredient("Viande","",2,"kg",2));
         notifyDataSetChanged();
     }
 
