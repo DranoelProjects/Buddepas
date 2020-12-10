@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popupBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:paddingVertical="10dp">
+        <TextView
+            android:id="@+id/calendar_title_add_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/size_list_view_text"
+            android:text="@string/addRecipeToCalendar"/>
+
+        <TextView
+            android:id="@+id/calendar_ask_people_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/calendar_title_add_recipe"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/title_ask_people_number"
+            android:layout_marginRight="20dp"
+            android:textSize="@dimen/normal_text_size" />
+
+        <EditText
+            android:id="@+id/calendar_input_people_number"
+            android:layout_width="wrap_content"
+            android:text="2"
+            android:minWidth="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/calendar_ask_people_number"
+            android:layout_below="@id/calendar_title_add_recipe"/>
+
+        <TextView
+            android:id="@+id/calendar_ask_select_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/calendar_ask_people_number"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/for_the"
+            android:layout_marginRight="20dp"
+            android:textSize="@dimen/normal_text_size" />
+
+        <EditText
+            android:id="@+id/calendar_popup_date_picker"
+            android:clickable="true"
+            android:layout_below="@id/calendar_ask_people_number"
+            android:layout_toRightOf="@+id/calendar_ask_select_date"
+            android:layout_marginTop="5dp"
+            android:hint="@string/selectDate"
+            android:focusable="false"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/calendar_popup_date_picker">
+            <Button
+                android:id="@+id/close_calendar_pop_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_marginEnd="20dp" />
+
+            <Button
+                android:id="@+id/add_recipe_to_calendar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
