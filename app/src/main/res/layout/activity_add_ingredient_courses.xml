@@ -26,25 +26,49 @@
             android:textSize="@dimen/title" />
 
         <TextView
+            android:id="@+id/ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom de l'ingrédient"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/title_add_ingredient_shopping"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:maxWidth="125dp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/input_shopping_ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Nom"
+            android:minWidth="60dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_add_ingredient_shopping"
+            android:layout_alignParentRight="true" />
+
+        <TextView
             android:id="@+id/ingredient_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ingredient_quantity"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
-            android:layout_below="@id/title_add_ingredient_shopping"
+            android:layout_below="@id/ingredient_name"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="5dp">
         </TextView>
 
         <EditText
-            android:id="@+id/input_stock_ingredient_quantity"
+            android:id="@+id/input_shopping_ingredient_quantity"
             android:layout_width="wrap_content"
             android:text="2"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:layout_below="@id/title_add_ingredient_shopping"
+            android:layout_below="@id/ingredient_name"
             android:layout_marginTop="20dp"
             android:layout_alignParentRight="true" />
 
@@ -61,21 +85,21 @@
         </TextView>
 
         <EditText
-            android:id="@+id/input_stock_ingredient_unit"
+            android:id="@+id/input_shopping_ingredient_unit"
             android:layout_width="wrap_content"
             android:layout_marginRight="40dp"
             android:text="kg"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_stock_ingredient_quantity"
+            android:layout_below="@+id/input_shopping_ingredient_quantity"
             android:layout_alignParentRight="true" />
 
 
         <TextView
-            android:id="@+id/ingredient_price"
+            android:id="@+id/ingredient_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/price"
+            android:text="@string/ingredient_type"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             android:layout_below="@id/ingredient_unit"
@@ -84,13 +108,36 @@
         </TextView>
 
         <EditText
-            android:id="@+id/input_stock_ingredient_price"
+            android:id="@+id/input_shopping_ingredient_type"
+            android:layout_width="wrap_content"
+            android:text="type"
+            android:minWidth="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:layout_below="@id/ingredient_unit"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/ingredient_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/ingredient_type"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/input_shopping_ingredient_price"
             android:layout_width="wrap_content"
             android:text="2"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:layout_below="@id/ingredient_unit"
+            android:layout_below="@id/ingredient_type"
             android:layout_marginTop="20dp"
             android:layout_alignParentRight="true" />
 
@@ -101,34 +148,10 @@
             android:text="€"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
-            android:layout_below="@id/ingredient_unit"
+            android:layout_below="@id/ingredient_type"
             android:layout_marginTop="30dp"
-            android:layout_alignRight="@id/input_stock_ingredient_price"
+            android:layout_alignRight="@id/input_shopping_ingredient_price"
         />
-
-        <TextView
-            android:id="@+id/ingredient_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nom de l'ingrédient"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_below="@id/ingredient_price"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="5dp"
-            android:maxWidth="125dp">
-        </TextView>
-
-        <EditText
-            android:id="@+id/input_stock_ingredient_name"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
-            android:text="Nom"
-            android:minWidth="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/input_stock_ingredient_price"
-            android:layout_alignParentRight="true" />
 
 
         <LinearLayout
@@ -136,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/ingredient_name">
+            android:layout_below="@id/ingredient_price">
             <Button
                 android:id="@+id/cancel_new_ingredient"
                 android:layout_width="wrap_content"
@@ -153,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/add_recipe"
+                android:text="@string/add_ingredient"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"/>
         </LinearLayout>

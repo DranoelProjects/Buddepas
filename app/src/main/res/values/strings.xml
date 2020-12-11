@@ -31,4 +31,6 @@
     <string name="ingredient_quantity">Quantité</string>
     <string name="ingredient_unit">Unité</string>
     <string name="title_add_ingredient_shopping">Ajouter un ingrédient à la liste de courses</string>
+    <string name="ingredient_type">Type</string>
+    <string name="add_ingredient">Ajouter l\'ingrédient</string>
 </resources>

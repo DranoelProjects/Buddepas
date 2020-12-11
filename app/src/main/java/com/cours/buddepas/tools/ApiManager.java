@@ -125,4 +125,67 @@ public class ApiManager {
             }
         });
     }
+
+
+    public void GetAllIngredients(){
+        singleton.setLoading(true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/Ingredients");
+        ingredientsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Ingredient> ingredientsArrayList = new ArrayList<>();
+
+                for (DataSnapshot dataValues : dataSnapshot.getChildren()){
+                    Ingredient ingredient = dataValues.getValue(Ingredient.class);
+                    ingredientsArrayList.add(ingredient);
+                }
+                singleton.setIngredientsArrayList((ArrayList<Ingredient>) ingredientsArrayList);
+                singleton.setLoading(false);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    public void AddNewIngredient(Ingredient ingredient){
+        //adding new recipe to database
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
+        userRef.child("Ingredients/" + String.valueOf(ingredient.getName())).setValue(ingredient);
+    }
+
+
+    public void GetAllShopping(){
+        singleton.setLoading(true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/Shopping");
+        ingredientsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Ingredient> ingredientsArrayList = new ArrayList<>();
+
+                for (DataSnapshot dataValues : dataSnapshot.getChildren()){
+                    Ingredient ingredient = dataValues.getValue(Ingredient.class);
+                    ingredientsArrayList.add(ingredient);
+                }
+                singleton.setIngredientsArrayList((ArrayList<Ingredient>) ingredientsArrayList);
+                singleton.setLoading(false);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+    public void AddIngredientShopping(Ingredient ingredient){
+        //adding new recipe to database
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
+        userRef.child("Shopping/" + String.valueOf(ingredient.getName())).setValue(ingredient);
+    }
 }

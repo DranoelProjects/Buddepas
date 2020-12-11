@@ -19,6 +19,7 @@ public class Singleton {
     private boolean loadingUserData = true;
     private UserData currentUserData;
     private boolean filtered = false;
+    private ArrayList<Ingredient> ingredientsArrayList = new ArrayList<>();
 
     //Instance
     private Singleton() {
@@ -103,4 +104,13 @@ public class Singleton {
         }
         return true;
     }
+
+    public ArrayList<Ingredient> getIngredientsArrayList() {
+        return ingredientsArrayList;
+    }
+
+    public void setIngredientsArrayList(ArrayList<Ingredient> ingredientsArrayList) {
+        this.ingredientsArrayList = ingredientsArrayList;
+    }
+
 }

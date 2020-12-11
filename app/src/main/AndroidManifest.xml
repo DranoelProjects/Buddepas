@@ -19,6 +19,10 @@
         <activity android:name=".ui.recipe.RecipeDetailsActivity"></activity>
         <activity android:name=".ui.recipe.AddNewRecipeActivity"></activity>
         <activity android:name=".ui.ParametersActivity"></activity>
+        <activity android:name=".ui.ingredients.AddNewIngredientActivity"></activity>
+        <activity android:name=".ui.shopping.AddIngredientShoppingActivity"></activity>
+
+
     </application>
 
 </manifest>
