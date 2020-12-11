@@ -13,12 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +36,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.CalendarSectionPageAdapter;
+import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
 import com.cours.buddepas.ui.calendar.fragments.DayFragment;
@@ -46,6 +50,7 @@ import com.google.android.material.tabs.TabLayout;
 import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -63,12 +68,21 @@ public class CalendarFragment extends Fragment {
     ViewPager viewPager;
     TabLayout tabLayout;
 
+    //PopUp
+    ArrayList<Recipe> recipesArrayList = new ArrayList<>();
+    ArrayList<String> recipesNamesArrayList = new ArrayList<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         calendarViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
         fragment = inflater.inflate(R.layout.fragment_calendar, container, false);
 
+        initPopup();
+        return fragment;
+    }
+
+    private void initPopup(){
         viewPager = fragment.findViewById(R.id.calendar_view_pager);
         tabLayout = fragment.findViewById(R.id.calendar_tab_layout);
 
@@ -82,10 +96,37 @@ public class CalendarFragment extends Fragment {
                         getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_program_recipe, null);
 
+                recipesArrayList = singleton.getRecipesArrayList();
+                if(recipesArrayList != null){
+                    for(int i=0;i<recipesArrayList.size();i++){
+                        recipesNamesArrayList.add(recipesArrayList.get(i).getName());
+                    }
+                }
                 //initalizing views in popup
                 Button btnCancel = popupView.findViewById(R.id.close_calendar_pop_up);
                 Button btnSubmit = popupView.findViewById(R.id.add_recipe_to_calendar_button);
                 EditText inputPeopleNumber = popupView.findViewById(R.id.calendar_input_people_number);
+
+                //AutoComplete Recipes list
+                final AutoCompleteTextView atvRecipes = popupView.findViewById(R.id.calendar_input_selected_recipe);
+                atvRecipes.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, recipesNamesArrayList));
+                atvRecipes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            if (recipesNamesArrayList.size() == 0 ||
+                                    recipesNamesArrayList.indexOf(atvRecipes.getText().toString()) == -1) {
+                                atvRecipes.setError("Recette invalide.");
+                            };
+                        }
+                    }
+                });
+
+                //Time picker
+                Spinner spinner = (Spinner) popupView.findViewById(R.id.calendar_popup_input_time);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                        R.array.time_array, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
 
                 //DatePicker
                 final Calendar myCalendar = Calendar.getInstance();
@@ -128,10 +169,7 @@ public class CalendarFragment extends Fragment {
                 });
             }
         });
-        return fragment;
     }
-
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

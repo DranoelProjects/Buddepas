@@ -35,4 +35,15 @@
     <string name="confirm">Confirmer</string>
     <string name="selectDate">Choisir une date</string>
     <string name="for_the">Pour le</string>
+    <string name="pick_recipe">Choisir une recette</string>
+    <string name="recipe">Recette</string>
+    <string name="at">au</string>
+    <string name="pickTime">Choisir un moment</string>
+    <string-array name="time_array">
+        <item>Petit déjeuner</item>
+        <item>Déjeuner</item>
+        <item>Goûter</item>
+        <item>Diner</item>
+        <item>Autres</item>
+    </string-array>
 </resources>
