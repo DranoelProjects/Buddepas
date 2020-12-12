@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,8 +39,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.CalendarSectionPageAdapter;
 import com.cours.buddepas.models.Recipe;
+import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
+import com.cours.buddepas.ui.ParametersActivity;
 import com.cours.buddepas.ui.calendar.fragments.DayFragment;
 import com.cours.buddepas.ui.calendar.fragments.ProgramFragment;
 import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
@@ -63,6 +67,10 @@ public class CalendarFragment extends Fragment {
     private CalendarViewModel calendarViewModel;
     private String TAG = "CalendarFragment";
 
+    //UserData
+    private boolean loading = true;
+    private UserData userData;
+
     //Fragments
     View fragment;
     ViewPager viewPager;
@@ -71,13 +79,23 @@ public class CalendarFragment extends Fragment {
     //PopUp
     ArrayList<Recipe> recipesArrayList = new ArrayList<>();
     ArrayList<String> recipesNamesArrayList = new ArrayList<>();
+    Recipe recipeToAdd;
+
+    //UI
+    private TextView textViewLoading;
+    private ImageButton programRecipeButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         calendarViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
         fragment = inflater.inflate(R.layout.fragment_calendar, container, false);
+        //Because this fragment is the first to be load, loading data in Singleton
+        apiManager.GetUserData();
+        apiManager.GetAllRecipes();
+        new LoadingUserDataTask().execute();
 
+        textViewLoading = fragment.findViewById(R.id.calendar_loading_user_data);
         initPopup();
         return fragment;
     }
@@ -87,7 +105,7 @@ public class CalendarFragment extends Fragment {
         tabLayout = fragment.findViewById(R.id.calendar_tab_layout);
 
         //program recipe btn
-        ImageButton programRecipeButton = fragment.findViewById(R.id.program_recipe_button);
+        programRecipeButton = fragment.findViewById(R.id.program_recipe_button);
         programRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,6 +115,7 @@ public class CalendarFragment extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_program_recipe, null);
 
                 recipesArrayList = singleton.getRecipesArrayList();
+                recipesNamesArrayList.clear();
                 if(recipesArrayList != null){
                     for(int i=0;i<recipesArrayList.size();i++){
                         recipesNamesArrayList.add(recipesArrayList.get(i).getName());
@@ -105,7 +124,7 @@ public class CalendarFragment extends Fragment {
                 //initalizing views in popup
                 Button btnCancel = popupView.findViewById(R.id.close_calendar_pop_up);
                 Button btnSubmit = popupView.findViewById(R.id.add_recipe_to_calendar_button);
-                EditText inputPeopleNumber = popupView.findViewById(R.id.calendar_input_people_number);
+                final EditText inputPeopleNumber = popupView.findViewById(R.id.calendar_input_people_number);
 
                 //AutoComplete Recipes list
                 final AutoCompleteTextView atvRecipes = popupView.findViewById(R.id.calendar_input_selected_recipe);
@@ -122,7 +141,7 @@ public class CalendarFragment extends Fragment {
                 });
 
                 //Time picker
-                Spinner spinner = (Spinner) popupView.findViewById(R.id.calendar_popup_input_time);
+                final Spinner spinner = (Spinner) popupView.findViewById(R.id.calendar_popup_input_time);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                         R.array.time_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -167,6 +186,25 @@ public class CalendarFragment extends Fragment {
                         popupWindow.dismiss();
                     }
                 });
+
+                btnSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for (int i = 0; i < recipesArrayList.size(); i++)
+                        {
+                            if (atvRecipes.getText().toString().toLowerCase().equals(recipesArrayList.get(i).getName().toLowerCase()))
+                            {
+                                recipeToAdd = recipesArrayList.get(i);
+                                break;
+                            }
+                        }
+                        recipeToAdd.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
+                        //We need to change amount of ingredients before
+                        String myFormat = "dd-MM-yyyy"; //In which you need put here
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        apiManager.AddRecipeInCalendar(sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString(), recipeToAdd);
+                    }
+                });
             }
         });
     }
@@ -203,8 +241,32 @@ public class CalendarFragment extends Fragment {
     }
 
     private void updateLabel(EditText editTextDatePicker, Calendar myCalendar) {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editTextDatePicker.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    class LoadingUserDataTask extends AsyncTask<Integer, Integer, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            while(loading){
+                loading = singleton.isLoadingUserData();
+            }
+            userData = singleton.getCurrentUserData();
+            return "Task Completed.";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(userData != null){
+            }
+            textViewLoading.setVisibility(View.INVISIBLE);
+        }
+
+        @Override
+        protected void onPreExecute() { }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) { }
     }
 }

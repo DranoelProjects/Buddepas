@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(this, ""+user.getEmail(), Toast.LENGTH_SHORT).show();
-                //Load User Data in Singleton
-                apiManager.GetUserData();
-
             } else {
                 // Sign in failed. If response is null the user canceled the
                 Toast.makeText(this, ""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();

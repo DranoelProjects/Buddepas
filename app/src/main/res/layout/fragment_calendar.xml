@@ -7,6 +7,7 @@
     tools:context=".ui.calendar.CalendarFragment">
 
     <LinearLayout
+        android:id="@+id/calendar_fragment_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -31,6 +32,18 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/calendar_loading_user_data"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/loading"
+        android:textColor="@color/green"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:gravity="center_horizontal" />
 
     <ImageButton
         android:id="@+id/program_recipe_button"

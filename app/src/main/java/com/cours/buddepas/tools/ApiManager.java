@@ -19,6 +19,7 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ApiManager {
@@ -125,4 +126,11 @@ public class ApiManager {
             }
         });
     }
+
+    public void AddRecipeInCalendar(String date, String time, Recipe recipe){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference calendarRef = database.getReference("users/"+user.getUid()+"/calendar/"+date+"/"+time);
+        calendarRef.child(String.valueOf(recipe.getId())).setValue(recipe);
+    }
+
 }
