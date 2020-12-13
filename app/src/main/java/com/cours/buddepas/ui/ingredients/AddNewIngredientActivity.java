@@ -3,6 +3,7 @@ package com.cours.buddepas.ui.ingredients;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -88,7 +89,16 @@ public class AddNewIngredientActivity extends AppCompatActivity {
         });
     }
 
-
+    private boolean validate(EditText[] fields){
+        for(int i = 0; i < fields.length; i++){
+            EditText currentField = fields[i];
+            if(currentField.getText().toString().length() <= 0){
+                currentField.setError("Ce champ ne peut pas être vide");
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void submitIngredient(){
         String author = "Anonyme";
@@ -101,19 +111,37 @@ public class AddNewIngredientActivity extends AppCompatActivity {
                 ingredient_name.getText().toString(),
                 Integer.valueOf(ingredient_quantity.getText().toString()),
                 ingredient_unit.getText().toString(),
-                0
+                (float) 0
         );
-        apiManager.AddNewIngredient(newIngredient);
-        Toast.makeText(AddNewIngredientActivity.this, "Ingrédient ajouté", Toast.LENGTH_SHORT).show();
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent myIntent = new Intent(AddNewIngredientActivity.this, MainActivity.class);
-                startActivity(myIntent);
-            }
-        }, 2000);
+        boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit,ingredient_type});
+
+        /*if(TextUtils.isEmpty(ingredient_name.getText())){
+            ingredient_name.setError("Ce champ ne peut pas être vide");
+        }
+        else if(TextUtils.isEmpty(ingredient_quantity.getText())){
+            ingredient_quantity.setError("Ce champ ne peut pas être vide");
+        }
+        else if(TextUtils.isEmpty(ingredient_unit.getText())){
+            ingredient_unit.setError("Ce champ ne peut pas être vide");
+        }
+        else if(TextUtils.isEmpty(ingredient_type.getText())){
+            ingredient_type.setError("Ce champ ne peut pas être vide");
+        }
+        else {*/
+        if(fieldsOK){
+            apiManager.AddNewIngredient(newIngredient);
+            Toast.makeText(AddNewIngredientActivity.this, "Ingrédient ajouté", Toast.LENGTH_SHORT).show();
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent myIntent = new Intent(AddNewIngredientActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                }
+            }, 2000);
+        }
     }
 
 }

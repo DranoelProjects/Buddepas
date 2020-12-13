@@ -79,7 +79,7 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
                 ingredient_name.getText().toString(),
                 Integer.valueOf(ingredient_quantity.getText().toString()),
                 ingredient_unit.getText().toString(),
-                Integer.valueOf(ingredient_price.getText().toString())
+                Float.valueOf(ingredient_price.getText().toString().replace(",","."))
         );
         apiManager.AddIngredientShopping(newIngredient);
         Toast.makeText(AddIngredientShoppingActivity.this, "Ingrédient ajouté à la liste de courses", Toast.LENGTH_SHORT).show();
