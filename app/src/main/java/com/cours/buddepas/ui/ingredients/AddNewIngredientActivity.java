@@ -114,7 +114,7 @@ public class AddNewIngredientActivity extends AppCompatActivity {
                 (float) 0
         );
 
-        boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit,ingredient_type});
+        boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit});
 
         /*if(TextUtils.isEmpty(ingredient_name.getText())){
             ingredient_name.setError("Ce champ ne peut pas être vide");
