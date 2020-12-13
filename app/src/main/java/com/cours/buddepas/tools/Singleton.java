@@ -2,6 +2,7 @@ package com.cours.buddepas.tools;
 
 import android.util.Log;
 
+import com.cours.buddepas.models.Filter;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
@@ -19,6 +20,8 @@ public class Singleton {
     private boolean loadingUserData = true;
     private UserData currentUserData;
     private boolean filtered = false;
+    private boolean activatedfilters = false;
+    private Filter filter = new Filter();
     private ArrayList<Ingredient> ingredientsArrayList = new ArrayList<>();
 
     //Instance
@@ -40,11 +43,10 @@ public class Singleton {
     }
 
     public ArrayList<Recipe> getRecipesArrayList() {
-        if (filtered)
-        {
+        if (filtered) {
             return filteredArrayList;
         }
-        return recipesArrayList;
+        return completeFiltered();
     }
 
     public void setRecipesArrayList(ArrayList<Recipe> recipesArrayList) {
@@ -113,4 +115,21 @@ public class Singleton {
         this.ingredientsArrayList = ingredientsArrayList;
     }
 
+    public void setFilter(Filter f)
+    {
+        this.filter = f;
+    }
+
+    private ArrayList<Recipe> completeFiltered()
+    {
+        ArrayList<Recipe> filtered = new ArrayList<Recipe>();
+        for (int i = 0; i < recipesArrayList.size();i++)
+        {
+            if (filter.fitFilters(recipesArrayList.get(i)))
+            {
+                filtered.add(recipesArrayList.get(i));
+            }
+        }
+        return filtered;
+    }
 }

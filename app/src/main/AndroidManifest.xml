@@ -21,6 +21,7 @@
         <activity android:name=".ui.ParametersActivity"></activity>
         <activity android:name=".ui.ingredients.AddNewIngredientActivity"></activity>
         <activity android:name=".ui.shopping.AddIngredientShoppingActivity"></activity>
+        <activity android:name=".ui.recipe.FilterRecipes"></activity>
 
 
     </application>

@@ -85,6 +85,15 @@ public class RecipeFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
+
+        Button filtersbutton = root.findViewById(R.id.activatefilters);
+        filtersbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getActivity(), FilterRecipes.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     public void onSearch(View view) {

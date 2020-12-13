@@ -33,4 +33,16 @@
     <string name="title_add_ingredient_shopping">Ajouter un ingrédient à la liste de courses</string>
     <string name="ingredient_type">Type</string>
     <string name="add_ingredient">Ajouter l\'ingrédient</string>
+    <string-array name="type_recette">
+        <item></item>
+        <item>Dessert</item>
+        <item>Repas</item>
+        <item>Plat</item>
+    </string-array>
+    <string-array name="apport_recette">
+        <item></item>
+        <item>Féculents</item>
+        <item>Légumes</item>
+        <item>Viande</item>
+    </string-array>
 </resources>

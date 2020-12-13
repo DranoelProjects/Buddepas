@@ -29,6 +29,14 @@ public class Ingredient {
         return amount;
     }
 
+    public Integer getGramAmount() {
+        if (unit.toLowerCase() == "kg")
+        {
+            return 1000*amount;
+        }
+        return amount;
+    }
+
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
