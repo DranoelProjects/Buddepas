@@ -1,20 +1,14 @@
 package com.cours.buddepas.ui.calendar;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -26,17 +20,11 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
-
 import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.CalendarSectionPageAdapter;
@@ -45,16 +33,9 @@ import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
-import com.cours.buddepas.ui.ParametersActivity;
 import com.cours.buddepas.ui.calendar.fragments.DayFragment;
 import com.cours.buddepas.ui.calendar.fragments.ProgramFragment;
-import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
-import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
-import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-
-import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,9 +96,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
-                LayoutInflater inflater = (LayoutInflater)
-                        getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_program_recipe, null);
+                View popupView = LayoutInflater.from(fragment.getContext()).inflate(R.layout.popup_program_recipe, null);
 
                 recipesArrayList = singleton.getRecipesArrayList();
                 recipesNamesArrayList.clear();
