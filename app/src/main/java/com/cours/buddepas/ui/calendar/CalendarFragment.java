@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,8 +37,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.CalendarSectionPageAdapter;
+import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
@@ -70,6 +73,7 @@ public class CalendarFragment extends Fragment {
     //UserData
     private boolean loading = true;
     private UserData userData;
+    private ArrayList<ProgrammedRecipe> programmedRecipeArrayList = new ArrayList<>();
 
     //Fragments
     View fragment;
@@ -80,6 +84,7 @@ public class CalendarFragment extends Fragment {
     ArrayList<Recipe> recipesArrayList = new ArrayList<>();
     ArrayList<String> recipesNamesArrayList = new ArrayList<>();
     Recipe recipeToAdd;
+    ProgrammedRecipe programmedRecipe;
 
     //UI
     private TextView textViewLoading;
@@ -122,13 +127,14 @@ public class CalendarFragment extends Fragment {
                     }
                 }
                 //initalizing views in popup
-                Button btnCancel = popupView.findViewById(R.id.close_calendar_pop_up);
-                Button btnSubmit = popupView.findViewById(R.id.add_recipe_to_calendar_button);
+                final Button btnCancel = popupView.findViewById(R.id.close_calendar_pop_up);
+                final Button btnSubmit = popupView.findViewById(R.id.add_recipe_to_calendar_button);
                 final EditText inputPeopleNumber = popupView.findViewById(R.id.calendar_input_people_number);
 
                 //AutoComplete Recipes list
                 final AutoCompleteTextView atvRecipes = popupView.findViewById(R.id.calendar_input_selected_recipe);
                 atvRecipes.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, recipesNamesArrayList));
+                atvRecipes.setThreshold(1);
                 atvRecipes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
@@ -142,7 +148,7 @@ public class CalendarFragment extends Fragment {
 
                 //Time picker
                 final Spinner spinner = (Spinner) popupView.findViewById(R.id.calendar_popup_input_time);
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                         R.array.time_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
@@ -170,6 +176,7 @@ public class CalendarFragment extends Fragment {
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
                 });
+                updateLabel(editTextDatePicker, myCalendar);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -190,6 +197,8 @@ public class CalendarFragment extends Fragment {
                 btnSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        btnSubmit.setEnabled(false);
+                        btnCancel.setEnabled(false);
                         for (int i = 0; i < recipesArrayList.size(); i++)
                         {
                             if (atvRecipes.getText().toString().toLowerCase().equals(recipesArrayList.get(i).getName().toLowerCase()))
@@ -199,10 +208,32 @@ public class CalendarFragment extends Fragment {
                             }
                         }
                         recipeToAdd.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
+
                         //We need to change amount of ingredients before
                         String myFormat = "dd-MM-yyyy"; //In which you need put here
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                        apiManager.AddRecipeInCalendar(sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString(), recipeToAdd);
+                        programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
+                        userData = singleton.getCurrentUserData();
+
+                        if(userData.getProgrammedRecipeArrayList() != null){
+                            programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
+                            programmedRecipeArrayList.add(programmedRecipe);
+                        } else {
+                            programmedRecipeArrayList.add(programmedRecipe);
+                        }
+                        userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
+                        apiManager.SetUserData(userData);
+                        Toast.makeText(getActivity(), "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                popupWindow.dismiss();
+                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(myIntent);
+                            }
+                        }, 1000);
+
                     }
                 });
             }

@@ -63,7 +63,7 @@ public class ParametersActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
 

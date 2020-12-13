@@ -39,11 +39,16 @@
     <string name="recipe">Recette</string>
     <string name="at">au</string>
     <string name="pickTime">Choisir un moment</string>
+    <string name="breakfast">Petit déjeuner</string>
+    <string name="lunch">Déjeuner</string>
+    <string name="afternoonSnack">Goûter</string>
+    <string name="dinner">Dîner</string>
+    <string name="snacks">Autres</string>
     <string-array name="time_array">
         <item>Petit déjeuner</item>
         <item>Déjeuner</item>
         <item>Goûter</item>
-        <item>Diner</item>
+        <item>Dîner</item>
         <item>Autres</item>
     </string-array>
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.cours.buddepas.models.Ingredient;
+import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
 import com.cours.buddepas.models.UserData;
@@ -38,6 +39,9 @@ public class ApiManager {
 
     //Recipes
     long maxId = 0;
+
+    //Calendar
+    long calendarMaxId =0;
 
     public void InitRecipesMaxId(){
         //get following ID in order to increment it
@@ -126,11 +130,4 @@ public class ApiManager {
             }
         });
     }
-
-    public void AddRecipeInCalendar(String date, String time, Recipe recipe){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference calendarRef = database.getReference("users/"+user.getUid()+"/calendar/"+date+"/"+time);
-        calendarRef.child(String.valueOf(recipe.getId())).setValue(recipe);
-    }
-
 }

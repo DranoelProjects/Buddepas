@@ -17,6 +17,102 @@
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             />
+
+        <TextView
+            android:id="@+id/day_breakfast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datePicker"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/breakfast"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/array_breakfast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/day_breakfast"/>
+
+        <TextView
+            android:id="@+id/day_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/array_breakfast"
+            android:layout_marginLeft="10dp"
+            android:text="@string/lunch"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/array_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/day_lunch"/>
+
+        <TextView
+            android:id="@+id/day_afternoon_snack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/array_lunch"
+            android:layout_marginLeft="10dp"
+            android:text="@string/afternoonSnack"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/array_afternoon_snack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/day_afternoon_snack"/>
+
+        <TextView
+            android:id="@+id/day_dinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/array_afternoon_snack"
+            android:layout_marginLeft="10dp"
+            android:text="@string/dinner"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/array_dinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/day_dinner"/>
+
+        <TextView
+            android:id="@+id/day_snacks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/array_dinner"
+            android:layout_marginLeft="10dp"
+            android:text="@string/snacks"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/array_snacks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/day_snacks"/>
     </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>
