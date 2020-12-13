@@ -73,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="40dp"
             android:text="2"
+            android:digits="0123456789"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ask_recipe_kind"
@@ -92,6 +93,7 @@
             android:layout_width="wrap_content"
             android:minWidth="60dp"
             android:text="15"
+            android:digits="0123456789"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ask_recipe_duration" />
 

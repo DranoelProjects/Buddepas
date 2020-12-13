@@ -111,7 +111,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
     }
 
     public void AddNewIngredient(){
-        recipeIngredientsList.add(new Ingredient("Viande","",2,"kg",2));
+        recipeIngredientsList.add(new Ingredient("Viande","",2,"kg", (float) 2));
         notifyDataSetChanged();
     }
 
@@ -176,7 +176,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             Ingredient newIngredient = recipeIngredientsList.get(position);
             if(charSequence != null && !charSequence.toString().isEmpty()){
-                newIngredient.setPrice(Integer.valueOf(charSequence.toString()));
+                newIngredient.setPrice(Float.valueOf(charSequence.toString()));
             }
             recipeIngredientsList.set(position, newIngredient);
         }

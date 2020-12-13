@@ -41,7 +41,7 @@ public class ShoppingAdapter extends BaseAdapter {
         String ingredientName = currentIngredient.getName();
         String ingredientKind = currentIngredient.getKind();
         Integer ingredientQuantity = currentIngredient.getAmount();
-        Integer ingredientPrice = currentIngredient.getPrice();
+        Float ingredientPrice = currentIngredient.getPrice();
 
         //get and change it
         TextView name = view.findViewById(R.id.text_view_ingredient_name);
@@ -53,7 +53,7 @@ public class ShoppingAdapter extends BaseAdapter {
         name.setText(ingredientName);
         kind.setText(ingredientKind);
         quantity.setText(Integer.toString(ingredientQuantity));
-        price.setText(Integer.toString(ingredientPrice));
+        price.setText(Float.toString(ingredientPrice));
         return view;
     }
 };

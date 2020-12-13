@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/text_view_output_ingredient_amount"
+        android:digits="0123456789"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
 
     <TextView
         android:id="@+id/text_view_output_ingredient_price"
+        android:digits="0123456789,."
         android:textColor="@color/black"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"

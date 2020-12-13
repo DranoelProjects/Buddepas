@@ -63,12 +63,14 @@
             android:id="@+id/input_stock_ingredient_quantity"
             android:layout_width="wrap_content"
             android:text="2"
+            android:inputType="number"
+            android:digits="0123456789"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:layout_below="@id/input_stock_ingredient_name"
             android:layout_marginTop="20dp"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"/>
 
         <TextView
             android:id="@+id/ingredient_unit"

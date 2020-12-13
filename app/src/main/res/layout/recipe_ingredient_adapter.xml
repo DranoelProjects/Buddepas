@@ -16,6 +16,7 @@
 
     <EditText
         android:id="@+id/input_recipe_ingredient_amount"
+        android:digits="0123456789"
         android:layout_width="40dp"
         android:layout_toRightOf="@id/input_recipe_ingredient_kind"
         android:layout_toEndOf="@id/input_recipe_ingredient_kind"
@@ -46,6 +47,7 @@
 
     <EditText
         android:id="@+id/input_recipe_ingredient_price"
+        android:digits="0123456789,."
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/normal_text_size"
