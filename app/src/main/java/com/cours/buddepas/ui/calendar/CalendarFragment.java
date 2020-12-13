@@ -233,7 +233,6 @@ public class CalendarFragment extends Fragment {
                                 startActivity(myIntent);
                             }
                         }, 1000);
-
                     }
                 });
             }

@@ -18,13 +18,6 @@ public class UserData {
         this.budget = budget;
     }
 
-    public UserData(String username, int budget, ArrayList<ProgrammedRecipe> programmedRecipeArrayList) {
-        this.username = username;
-        this.budget = budget;
-        this.programmedRecipeArrayList = programmedRecipeArrayList;
-    }
-
-
     public UserData(String username, int budget, ArrayList<Ingredient> stockArrayList, ArrayList<Ingredient> shoppingArrayList, ArrayList<ProgrammedRecipe> programmedRecipeArrayList) {
         this.username = username;
         this.budget = budget;
