@@ -18,7 +18,7 @@ public class Singleton {
     private ArrayList<Recipe> filteredArrayList = new ArrayList<>();
     private boolean loading = true;
     private boolean loadingUserData = true;
-    private UserData currentUserData;
+    private UserData currentUserData = new UserData();
     private boolean filtered = false;
     private boolean activatedfilters = false;
     private Filter filter = new Filter();

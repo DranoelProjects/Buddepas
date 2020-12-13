@@ -42,7 +42,6 @@ public class ParametersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
         initUI();
-        apiManager.GetUserData();
         new LoadingUserDataTask().execute();
     }
 
@@ -64,7 +63,7 @@ public class ParametersActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
 

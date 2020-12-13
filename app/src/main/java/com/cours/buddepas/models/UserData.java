@@ -1,12 +1,14 @@
 package com.cours.buddepas.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserData {
     private String username;
     private int budget;
     private ArrayList<Ingredient> stockArrayList;
     private ArrayList<Ingredient> shoppingArrayList;
+    private ArrayList<ProgrammedRecipe> programmedRecipeArrayList;
 
     public UserData(){
     }
@@ -16,11 +18,12 @@ public class UserData {
         this.budget = budget;
     }
 
-    public UserData(String username, int budget, ArrayList<Ingredient> stockArrayList, ArrayList<Ingredient> shoppingArrayList) {
+    public UserData(String username, int budget, ArrayList<Ingredient> stockArrayList, ArrayList<Ingredient> shoppingArrayList, ArrayList<ProgrammedRecipe> programmedRecipeArrayList) {
         this.username = username;
         this.budget = budget;
         this.stockArrayList = stockArrayList;
         this.shoppingArrayList = shoppingArrayList;
+        this.programmedRecipeArrayList = programmedRecipeArrayList;
     }
 
     public String getUsername() {
@@ -53,5 +56,13 @@ public class UserData {
 
     public void setShoppingArrayList(ArrayList<Ingredient> shoppingArrayList) {
         this.shoppingArrayList = shoppingArrayList;
+    }
+
+    public ArrayList<ProgrammedRecipe> getProgrammedRecipeArrayList() {
+        return programmedRecipeArrayList;
+    }
+
+    public void setProgrammedRecipeArrayList(ArrayList<ProgrammedRecipe> programmedRecipeArrayList) {
+        this.programmedRecipeArrayList = programmedRecipeArrayList;
     }
 }
