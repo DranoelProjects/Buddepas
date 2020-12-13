@@ -35,12 +35,22 @@
     <string name="add_ingredient">Ajouter l\'ingrédient</string>
     <string-array name="type_recette">
         <item></item>
+        <item>Plat</item>
         <item>Dessert</item>
         <item>Repas</item>
+    </string-array>
+    <string-array name="select_type">
         <item>Plat</item>
+        <item>Dessert</item>
+        <item>Repas</item>
     </string-array>
     <string-array name="apport_recette">
         <item></item>
+        <item>Féculents</item>
+        <item>Légumes</item>
+        <item>Viande</item>
+    </string-array>
+    <string-array name="select_apport">
         <item>Féculents</item>
         <item>Légumes</item>
         <item>Viande</item>

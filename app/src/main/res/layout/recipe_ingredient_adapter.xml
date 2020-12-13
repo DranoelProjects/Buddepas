@@ -7,19 +7,21 @@
     android:orientation="horizontal">
 
 
-    <EditText
+    <Spinner
         android:id="@+id/input_recipe_ingredient_kind"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
-        tools:ignore="SpUsage" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/input_recipe_ingredient_amount"
         android:layout_width="40dp"
-        android:layout_toRightOf="@id/input_recipe_ingredient_kind"
-        android:layout_toEndOf="@id/input_recipe_ingredient_kind"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_toEndOf="@+id/input_recipe_ingredient_kind"
+        android:layout_toRightOf="@+id/input_recipe_ingredient_kind"
         android:textSize="@dimen/normal_text_size"
         tools:ignore="SpUsage" />
 

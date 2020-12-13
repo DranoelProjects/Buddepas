@@ -64,7 +64,7 @@ public class FilterRecipes extends AppCompatActivity {
         // Specify the layout to use when the list of choices appears
         typeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        type.setAdapter(kindadapter);
+        type.setAdapter(typeadapter);
 
 
         kind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

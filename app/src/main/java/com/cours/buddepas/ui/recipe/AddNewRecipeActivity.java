@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +38,8 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     private static androidx.recyclerview.widget.RecyclerView recyclerViewIngredients;
     private static androidx.recyclerview.widget.RecyclerView recyclerViewSteps;
     private EditText editTextRecipeName;
-    private EditText editTextRecipeKind;
+    private Spinner recipeKind;
+    private String kind;
     private EditText npPeopleNumber;
     private EditText npDuration;
     private Button cancel;
@@ -64,7 +68,7 @@ public class AddNewRecipeActivity extends AppCompatActivity {
         recyclerViewIngredients = findViewById(R.id.recycler_view_input_recipe_ingredients);
         recyclerViewSteps = findViewById(R.id.recycler_view_input_recipe_steps);
         editTextRecipeName = findViewById(R.id.input_recipe_name);
-        editTextRecipeKind = findViewById(R.id.input_recipe_kind);
+        recipeKind = findViewById(R.id.input_recipe_kind);
         npPeopleNumber = findViewById(R.id.input_people_number);
         npDuration = findViewById(R.id.input_recipe_duration);
         cancel = findViewById(R.id.cancel_new_recipe);
@@ -92,6 +96,25 @@ public class AddNewRecipeActivity extends AppCompatActivity {
         recipeStepAdapter.setRecipeStepsList(stepsArrayList);
         recipe.setIngredientsArrayList(ingredientsArrayList);
         recipe.setStepsArrayList(stepsArrayList);
+
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> kindadapter = ArrayAdapter.createFromResource(this, R.array.select_type, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        kindadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        recipeKind.setAdapter(kindadapter);
+
+        recipeKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                kind = (String) parent.getItemAtPosition(pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                kind = "Plat";
+            }
+        });
 
         //Init buttons
         //cancel action
@@ -143,7 +166,7 @@ public class AddNewRecipeActivity extends AppCompatActivity {
                 0,
                 editTextRecipeName.getText().toString(),
                 author,
-                editTextRecipeKind.getText().toString(),
+                kind,
                 Integer.valueOf(npPeopleNumber.getText().toString()),
                 Integer.valueOf(npDuration.getText().toString()),
                 (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
