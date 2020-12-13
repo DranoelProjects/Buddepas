@@ -115,19 +115,21 @@ public class ApiManager {
     public void GetUserData(){
         singleton.setLoadingUserData(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = database.getReference("users/"+user.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserData currentUserData = dataSnapshot.getValue(UserData.class);
-                singleton.setCurrentUserData(currentUserData);
-                singleton.setLoadingUserData(false);
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        if(user != null){
+            DatabaseReference userRef = database.getReference("users/"+user.getUid());
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserData currentUserData = dataSnapshot.getValue(UserData.class);
+                    singleton.setCurrentUserData(currentUserData);
+                    singleton.setLoadingUserData(false);
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+        }
     }
 }
