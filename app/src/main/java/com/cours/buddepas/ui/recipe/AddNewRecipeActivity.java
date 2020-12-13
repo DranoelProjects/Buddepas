@@ -172,16 +172,31 @@ public class AddNewRecipeActivity extends AppCompatActivity {
                 (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
                 (ArrayList) recipeStepAdapter.getRecipeStepsList()
         );
-        apiManager.AddNewRecipe(newRecipe);
-        Toast.makeText(AddNewRecipeActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent myIntent = new Intent(AddNewRecipeActivity.this, MainActivity.class);
-                startActivity(myIntent);
+        boolean fieldsOK = validate(new EditText[]{editTextRecipeName, npPeopleNumber, npDuration});
+        if(fieldsOK) {
+            apiManager.AddNewRecipe(newRecipe);
+            Toast.makeText(AddNewRecipeActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent myIntent = new Intent(AddNewRecipeActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                }
+            }, 2000);
+        }
+    }
+
+    private boolean validate(EditText[] fields){
+        for(int i = 0; i < fields.length; i++){
+            EditText currentField = fields[i];
+            if(currentField.getText().toString().length() <= 0){
+                currentField.setError("Ce champ ne peut pas être vide");
+                return false;
             }
-        }, 2000);
+        }
+        return true;
     }
 }

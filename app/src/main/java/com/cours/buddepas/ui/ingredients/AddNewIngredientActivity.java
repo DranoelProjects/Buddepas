@@ -116,19 +116,6 @@ public class AddNewIngredientActivity extends AppCompatActivity {
 
         boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit});
 
-        /*if(TextUtils.isEmpty(ingredient_name.getText())){
-            ingredient_name.setError("Ce champ ne peut pas être vide");
-        }
-        else if(TextUtils.isEmpty(ingredient_quantity.getText())){
-            ingredient_quantity.setError("Ce champ ne peut pas être vide");
-        }
-        else if(TextUtils.isEmpty(ingredient_unit.getText())){
-            ingredient_unit.setError("Ce champ ne peut pas être vide");
-        }
-        else if(TextUtils.isEmpty(ingredient_type.getText())){
-            ingredient_type.setError("Ce champ ne peut pas être vide");
-        }
-        else {*/
         if(fieldsOK){
             apiManager.AddNewIngredient(newIngredient);
             Toast.makeText(AddNewIngredientActivity.this, "Ingrédient ajouté", Toast.LENGTH_SHORT).show();
