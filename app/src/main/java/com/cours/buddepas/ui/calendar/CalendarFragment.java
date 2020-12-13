@@ -214,7 +214,9 @@ public class CalendarFragment extends Fragment {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                         programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
                         userData = singleton.getCurrentUserData();
-
+                        if(userData == null){
+                            userData = new UserData();
+                        }
                         if(userData.getProgrammedRecipeArrayList() != null){
                             programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
                             programmedRecipeArrayList.add(programmedRecipe);
