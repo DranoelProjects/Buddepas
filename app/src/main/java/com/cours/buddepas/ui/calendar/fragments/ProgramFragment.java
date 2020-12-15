@@ -85,12 +85,9 @@ public class ProgramFragment extends Fragment {
     private void UpdateCalendarUI(){
         userData = singleton.getCurrentUserData();
         if(userData != null){
-            calendar = userData.getProgrammedRecipeArrayList();
+            calendar = singleton.getCalendarCopy();
             if(calendar != null){
                 arrangeProgrammedRecipes();
-                /*for (int i=0;i<calendar.size();i++){
-                    ProgrammedRecipe currentProgrammedRecipe = calendar.get(i);
-                }*/
             }
         }
         calendarAdapter.setProgrammedRecipeList(calendarFiltered);
@@ -152,14 +149,6 @@ public class ProgramFragment extends Fragment {
                 calendarFiltered.add(temp);
             }
         }
-        for (int i=0;i<calendarFiltered.size();i++) {
-            for (int j=0;j<calendarFiltered.get(i).size();j++){
-                ProgrammedRecipe currentProgrammedRecipe = calendarFiltered.get(i).get(j);
-                Log.d(TAG, "i: " + i + " j: " + j + " " + currentProgrammedRecipe.getDate() + " " + currentProgrammedRecipe.getName());
-            }
-        }
-        Log.d(TAG, "calendar : " + calendar.toString());
-        Log.d(TAG, "calendarFiltered : " + calendarFiltered.toString());
     }
 
     private void deletePassedRecipe() {

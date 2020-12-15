@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.cours.buddepas.models.Filter;
 import com.cours.buddepas.models.Ingredient;
+import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
 import com.cours.buddepas.models.UserData;
 import com.firebase.ui.auth.data.model.User;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Singleton {
     private String TAG = "Singleton";
@@ -19,6 +21,7 @@ public class Singleton {
     private boolean loading = true;
     private boolean loadingUserData = true;
     private UserData currentUserData = new UserData();
+    private ArrayList<ProgrammedRecipe> calendarCopy = new ArrayList<>();
     private boolean filtered = false;
     private boolean activatedfilters = false;
     private Filter filter = new Filter();
@@ -67,6 +70,7 @@ public class Singleton {
 
     public void setCurrentUserData(UserData currentUserData) {
         this.currentUserData = currentUserData;
+        this.calendarCopy = new ArrayList<>(currentUserData.getProgrammedRecipeArrayList());
     }
 
     public boolean isLoadingUserData() {
@@ -75,6 +79,10 @@ public class Singleton {
 
     public void setLoadingUserData(boolean loadingUserData) {
         this.loadingUserData = loadingUserData;
+    }
+
+    public ArrayList<ProgrammedRecipe> getCalendarCopy() {
+        return calendarCopy;
     }
 
     public void filter(String filter) {

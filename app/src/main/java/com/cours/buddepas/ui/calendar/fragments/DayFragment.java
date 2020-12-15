@@ -33,6 +33,7 @@ import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class DayFragment extends Fragment implements DatePickerListener {
@@ -101,7 +102,7 @@ public class DayFragment extends Fragment implements DatePickerListener {
         picker
                 .setListener(this)
                 .setDays(60)
-                .setOffset(0)
+                .setOffset(7)
                 .setDateSelectedColor(resource.getColor(R.color.colorPrimary))
                 .setDateSelectedTextColor(Color.WHITE)
                 .setMonthAndYearTextColor(resource.getColor(R.color.colorPrimary))
@@ -110,7 +111,6 @@ public class DayFragment extends Fragment implements DatePickerListener {
                 .setUnselectedDayTextColor(resource.getColor(R.color.disable))
                 .showTodayButton(false)
                 .init();
-        picker.setDate(new DateTime());
 
         //Breakfast
         recyclerBreakfast = view.findViewById(R.id.array_breakfast);
@@ -147,14 +147,13 @@ public class DayFragment extends Fragment implements DatePickerListener {
     @Override
     public void onDateSelected(@NonNull final DateTime dateSelected) {
         // log it for demo
-        Log.i("HorizontalPicker", "Selected date is " + dateSelected.toString());
         String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         pickedDate = sdf.format(dateSelected.toDate());
-        UpdateCalendarDayUI();
+        updateCalendarDayUI();
     }
 
-    public void UpdateCalendarDayUI(){
+    private void updateCalendarDayUI(){
         userData = singleton.getCurrentUserData();
         if(userData != null){
             calendar = userData.getProgrammedRecipeArrayList();
@@ -219,7 +218,8 @@ public class DayFragment extends Fragment implements DatePickerListener {
         @Override
         protected void onPostExecute(String result) {
             if(userData != null){
-                UpdateCalendarDayUI();
+                updateCalendarDayUI();
+                picker.setDate(new DateTime());
             }
         }
 

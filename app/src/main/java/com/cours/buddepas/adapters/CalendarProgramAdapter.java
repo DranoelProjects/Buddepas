@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cours.buddepas.R;
 import com.cours.buddepas.models.ProgrammedRecipe;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -124,12 +127,21 @@ public class CalendarProgramAdapter extends RecyclerView.Adapter<CalendarProgram
         }
 
         public void setRecipesList(final List<ProgrammedRecipe> dayRecipesList, final int position) {
+            //Today date
             String myFormat = "dd-MM-yyyy"; //In which you need put here
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             String todayDate = sdf.format(new Date());
+
+            //Tomorrow date
+            Calendar tomorrow =new GregorianCalendar();
+            tomorrow.add(Calendar.DATE, 1);
+            String tomorrowDate = sdf.format(tomorrow.getTime());
+
             if (dayRecipesList.get(0).getDate().equals(todayDate)){
                 date.setText("Aujourd'hui");
-            } else {
+            } else if (dayRecipesList.get(0).getDate().equals(tomorrowDate)) {
+                date.setText("Demain");
+            } else{
                 date.setText(dayRecipesList.get(0).getDate());
             }
             breakFast.clear();
