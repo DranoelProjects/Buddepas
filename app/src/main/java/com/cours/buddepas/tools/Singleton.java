@@ -70,7 +70,11 @@ public class Singleton {
 
     public void setCurrentUserData(UserData currentUserData) {
         this.currentUserData = currentUserData;
-        this.calendarCopy = new ArrayList<>(currentUserData.getProgrammedRecipeArrayList());
+        if(currentUserData != null && currentUserData.getProgrammedRecipeArrayList()!= null){
+            this.calendarCopy = new ArrayList<>(currentUserData.getProgrammedRecipeArrayList());
+        } else {
+            this.calendarCopy = new ArrayList<>();
+        }
     }
 
     public boolean isLoadingUserData() {
