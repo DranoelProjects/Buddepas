@@ -72,6 +72,7 @@
     <string name="afternoonSnack">Goûter</string>
     <string name="dinner">Dîner</string>
     <string name="snacks">Autres</string>
+    <string name="today">Aujourd\'hui</string>
     <string-array name="time_array">
         <item>Petit déjeuner</item>
         <item>Déjeuner</item>
