@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        app:layout_constraintBottom_toBottomOf="@+id/filterkind"
+        app:layout_constraintEnd_toStartOf="@+id/filterkind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filterkind" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom"
+        app:layout_constraintBottom_toBottomOf="@+id/filtername"
+        app:layout_constraintEnd_toStartOf="@+id/filtername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filtername" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auteur"
+        app:layout_constraintBottom_toBottomOf="@+id/filterauthor"
+        app:layout_constraintEnd_toStartOf="@+id/filterauthor"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filterauthor" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temps de préparation"
+        app:layout_constraintBottom_toBottomOf="@+id/filtertime"
+        app:layout_constraintEnd_toStartOf="@+id/filtertime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filtertime" />
+
+    <Spinner
+        android:id="@+id/filterkind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/filterauthor"
+        app:layout_constraintTop_toBottomOf="@+id/filterauthor" />
+
+    <Button
+        android:id="@+id/applyfilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+
+        android:text="Appliquer"
+        app:layout_constraintEnd_toStartOf="@+id/filtercancel"
+        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filtercancel" />
+
+    <Button
+        android:id="@+id/filtercancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Désactiver la recherche avancée"
+        app:layout_constraintStart_toStartOf="@+id/filtertime"
+        app:layout_constraintTop_toBottomOf="@+id/filtertime" />
+
+    <EditText
+        android:id="@+id/filtername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/filterauthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/filtername"
+        app:layout_constraintTop_toBottomOf="@+id/filtername" />
+
+    <EditText
+        android:id="@+id/filtertime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/filterkind"
+        app:layout_constraintTop_toBottomOf="@+id/filtertype" />
+
+    <Spinner
+        android:id="@+id/filtertype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/filterkind"
+        app:layout_constraintTop_toBottomOf="@+id/filterkind" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apport"
+        app:layout_constraintBottom_toBottomOf="@+id/filtertype"
+        app:layout_constraintEnd_toStartOf="@+id/filtertype"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filtertype" />
+</androidx.constraintlayout.widget.ConstraintLayout>

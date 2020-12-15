@@ -68,6 +68,17 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validate(EditText[] fields){
+        for(int i = 0; i < fields.length; i++){
+            EditText currentField = fields[i];
+            if(currentField.getText().toString().length() <= 0){
+                currentField.setError("Ce champ ne peut pas être vide");
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void submitIngredient(){
         String author = "Anonyme";
         if(singleton.getCurrentUserData() != null && singleton.getCurrentUserData().getUsername() != null){
@@ -79,19 +90,23 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
                 ingredient_name.getText().toString(),
                 Integer.valueOf(ingredient_quantity.getText().toString()),
                 ingredient_unit.getText().toString(),
-                Integer.valueOf(ingredient_price.getText().toString())
+                Float.valueOf(ingredient_price.getText().toString().replace(",","."))
         );
-        apiManager.AddIngredientShopping(newIngredient);
-        Toast.makeText(AddIngredientShoppingActivity.this, "Ingrédient ajouté à la liste de courses", Toast.LENGTH_SHORT).show();
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent myIntent = new Intent(AddIngredientShoppingActivity.this, MainActivity.class);
-                startActivity(myIntent);
-            }
-        }, 2000);
+        boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit, ingredient_price});
+        if(fieldsOK) {
+            apiManager.AddIngredientShopping(newIngredient);
+            Toast.makeText(AddIngredientShoppingActivity.this, "Ingrédient ajouté à la liste de courses", Toast.LENGTH_SHORT).show();
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent myIntent = new Intent(AddIngredientShoppingActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                }
+            }, 2000);
+        }
     }
 
 }

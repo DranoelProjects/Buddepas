@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.cours.buddepas.models.Ingredient;
+import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
 import com.cours.buddepas.models.UserData;
@@ -19,6 +20,7 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ApiManager {
@@ -37,6 +39,9 @@ public class ApiManager {
 
     //Recipes
     long maxId = 0;
+
+    //Calendar
+    long calendarMaxId =0;
 
     public void InitRecipesMaxId(){
         //get following ID in order to increment it
@@ -110,20 +115,22 @@ public class ApiManager {
     public void GetUserData(){
         singleton.setLoadingUserData(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = database.getReference("users/"+user.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserData currentUserData = dataSnapshot.getValue(UserData.class);
-                singleton.setCurrentUserData(currentUserData);
-                singleton.setLoadingUserData(false);
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        if(user != null){
+            DatabaseReference userRef = database.getReference("users/"+user.getUid());
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserData currentUserData = dataSnapshot.getValue(UserData.class);
+                    singleton.setCurrentUserData(currentUserData);
+                    singleton.setLoadingUserData(false);
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+        }
     }
 
 

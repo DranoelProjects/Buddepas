@@ -33,4 +33,51 @@
     <string name="title_add_ingredient_shopping">Ajouter un ingrédient à la liste de courses</string>
     <string name="ingredient_type">Type</string>
     <string name="add_ingredient">Ajouter l\'ingrédient</string>
+    <string-array name="type_recette">
+        <item></item>
+        <item>Plat</item>
+        <item>Dessert</item>
+        <item>Repas</item>
+    </string-array>
+    <string-array name="select_type">
+        <item>Plat</item>
+        <item>Dessert</item>
+        <item>Repas</item>
+    </string-array>
+    <string-array name="apport_recette">
+        <item></item>
+        <item>Féculents</item>
+        <item>Légumes</item>
+        <item>Viande</item>
+    </string-array>
+    <string-array name="select_apport">
+        <item>Féculents</item>
+        <item>Légumes</item>
+        <item>Viande</item>
+    </string-array>
+    <string name="day">Jour</string>
+    <string name="program">Programme</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addRecipeToCalendar">Ajouter une recette au calendrier</string>
+    <string name="confirm">Confirmer</string>
+    <string name="selectDate">Choisir une date</string>
+    <string name="for_the">Pour le</string>
+    <string name="pick_recipe">Choisir une recette</string>
+    <string name="recipe">Recette</string>
+    <string name="at">au</string>
+    <string name="pickTime">Choisir un moment</string>
+    <string name="breakfast">Petit déjeuner</string>
+    <string name="lunch">Déjeuner</string>
+    <string name="afternoonSnack">Goûter</string>
+    <string name="dinner">Dîner</string>
+    <string name="snacks">Autres</string>
+    <string name="today">Aujourd\'hui</string>
+    <string-array name="time_array">
+        <item>Petit déjeuner</item>
+        <item>Déjeuner</item>
+        <item>Goûter</item>
+        <item>Dîner</item>
+        <item>Autres</item>
+    </string-array>
 </resources>

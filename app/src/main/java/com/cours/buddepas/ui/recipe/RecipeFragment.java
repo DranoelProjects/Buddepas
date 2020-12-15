@@ -31,7 +31,6 @@ import java.util.ArrayList;
 
 public class RecipeFragment extends Fragment {
     //Instances
-    private ApiManager apiManager = ApiManager.getInstance();
     private Singleton singleton = Singleton.getInstance();
     private RecipeViewModel recipeViewModel;
     private String TAG = "RecipeFragment";
@@ -55,7 +54,6 @@ public class RecipeFragment extends Fragment {
 
     private void init(View root){
         textViewLoading = root.findViewById(R.id.recipe_loading);
-        apiManager.GetAllRecipes();
         listView = root.findViewById(R.id.list_view_recipes);
         new LoadingRecipesListTask().execute();
         Button okbutton = (Button) root.findViewById(R.id.searchok);
@@ -82,6 +80,15 @@ public class RecipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(getActivity(), AddNewRecipeActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button filtersbutton = root.findViewById(R.id.activatefilters);
+        filtersbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getActivity(), FilterRecipes.class);
                 startActivity(myIntent);
             }
         });

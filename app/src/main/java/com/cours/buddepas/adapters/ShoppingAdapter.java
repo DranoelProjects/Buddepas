@@ -55,7 +55,7 @@ public class ShoppingAdapter extends BaseAdapter{
         String ingredientKind = currentIngredient.getKind();
         String ingredientUnit = currentIngredient.getUnit();
         Integer ingredientQuantity = currentIngredient.getAmount();
-        Integer ingredientPrice = currentIngredient.getPrice();
+        Float ingredientPrice = currentIngredient.getPrice();
 
         //get and change it
         TextView name = view.findViewById(R.id.text_view_ingredient_name);
@@ -69,7 +69,8 @@ public class ShoppingAdapter extends BaseAdapter{
         kind.setText(ingredientKind);
         quantity.setText(Integer.toString(ingredientQuantity));
         unit.setText(ingredientUnit);
-        price.setText(Integer.toString(ingredientPrice));
+        price.setText(Float.toString(ingredientPrice)); 
+
 
         //Init delete btn
         ImageButton deleteBtn = view.findViewById(R.id.button_remove_shopping_ingredient);

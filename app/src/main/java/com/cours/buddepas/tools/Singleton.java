@@ -2,13 +2,16 @@ package com.cours.buddepas.tools;
 
 import android.util.Log;
 
+import com.cours.buddepas.models.Filter;
 import com.cours.buddepas.models.Ingredient;
+import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
 import com.cours.buddepas.models.UserData;
 import com.firebase.ui.auth.data.model.User;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Singleton {
     private String TAG = "Singleton";
@@ -17,8 +20,11 @@ public class Singleton {
     private ArrayList<Recipe> filteredArrayList = new ArrayList<>();
     private boolean loading = true;
     private boolean loadingUserData = true;
-    private UserData currentUserData;
+    private UserData currentUserData = new UserData();
+    private ArrayList<ProgrammedRecipe> calendarCopy = new ArrayList<>();
     private boolean filtered = false;
+    private boolean activatedfilters = false;
+    private Filter filter = new Filter();
     private ArrayList<Ingredient> ingredientsArrayList = new ArrayList<>();
 
     //Instance
@@ -40,11 +46,10 @@ public class Singleton {
     }
 
     public ArrayList<Recipe> getRecipesArrayList() {
-        if (filtered)
-        {
+        if (filtered) {
             return filteredArrayList;
         }
-        return recipesArrayList;
+        return completeFiltered();
     }
 
     public void setRecipesArrayList(ArrayList<Recipe> recipesArrayList) {
@@ -65,6 +70,11 @@ public class Singleton {
 
     public void setCurrentUserData(UserData currentUserData) {
         this.currentUserData = currentUserData;
+        if(currentUserData != null && currentUserData.getProgrammedRecipeArrayList()!= null){
+            this.calendarCopy = new ArrayList<>(currentUserData.getProgrammedRecipeArrayList());
+        } else {
+            this.calendarCopy = new ArrayList<>();
+        }
     }
 
     public boolean isLoadingUserData() {
@@ -73,6 +83,10 @@ public class Singleton {
 
     public void setLoadingUserData(boolean loadingUserData) {
         this.loadingUserData = loadingUserData;
+    }
+
+    public ArrayList<ProgrammedRecipe> getCalendarCopy() {
+        return calendarCopy;
     }
 
     public void filter(String filter) {
@@ -113,4 +127,21 @@ public class Singleton {
         this.ingredientsArrayList = ingredientsArrayList;
     }
 
+    public void setFilter(Filter f)
+    {
+        this.filter = f;
+    }
+
+    private ArrayList<Recipe> completeFiltered()
+    {
+        ArrayList<Recipe> filtered = new ArrayList<Recipe>();
+        for (int i = 0; i < recipesArrayList.size();i++)
+        {
+            if (filter.fitFilters(recipesArrayList.get(i)))
+            {
+                filtered.add(recipesArrayList.get(i));
+            }
+        }
+        return filtered;
+    }
 }

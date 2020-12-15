@@ -5,11 +5,11 @@ public class Ingredient {
     private String name;
     private Integer amount;
     private String unit;
-    private Integer price;
+    private Float price;
 
     public Ingredient(){}
 
-    public Ingredient(String kind, String name, Integer amount, String unit, Integer price) {
+    public Ingredient(String kind, String name, Integer amount, String unit, Float price) {
         this.kind = kind;
         this.name = name;
         this.amount = amount;
@@ -29,6 +29,14 @@ public class Ingredient {
         return amount;
     }
 
+    public Integer getGramAmount() {
+        if (unit.toLowerCase() == "kg")
+        {
+            return 1000*amount;
+        }
+        return amount;
+    }
+
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
@@ -41,11 +49,11 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

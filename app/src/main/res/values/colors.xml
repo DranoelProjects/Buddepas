@@ -3,8 +3,9 @@
     <color name="colorPrimary">#FF6F00</color>
     <color name="disable">#7A7A7A</color>
     <color name="colorPrimaryDark">#D25B00</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#FF6F00</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="green">#1C9F21</color>
+    <color name="popupBackground">#8BDADADA</color>
 </resources>

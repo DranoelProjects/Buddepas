@@ -49,14 +49,6 @@
             android:text="@string/title_ask_recipe_kind"
             android:textSize="@dimen/normal_text_size" />
 
-        <EditText
-            android:id="@+id/input_recipe_kind"
-            android:layout_width="200dp"
-            android:text="@string/plat"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ask_recipe_kind"
-            android:textSize="@dimen/normal_text_size" />
-
         <TextView
             android:id="@+id/ask_people_number"
             android:layout_width="wrap_content"
@@ -73,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="40dp"
             android:text="2"
+            android:digits="0123456789"
             android:minWidth="60dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ask_recipe_kind"
@@ -83,8 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/input_recipe_kind"
-            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="12dp"
             android:text="@string/title_ask_recipe_duration"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/normal_text_size" />
 
         <EditText
@@ -92,8 +86,20 @@
             android:layout_width="wrap_content"
             android:minWidth="60dp"
             android:text="15"
+            android:digits="0123456789"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ask_recipe_duration" />
+
+        <Spinner
+            android:id="@+id/input_recipe_kind"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ask_recipe_kind"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginTop="18dp" />
 
         <TextView
             android:id="@+id/ask_recipe_ingredients"

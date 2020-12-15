@@ -1,9 +1,8 @@
 package com.cours.buddepas.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Recipe {
+public class ProgrammedRecipe {
     private long id;
     private String name;
     public String author;
@@ -12,10 +11,41 @@ public class Recipe {
     private Integer minutesDuration;
     private ArrayList<Ingredient> ingredientsArrayList;
     private ArrayList<Step> stepsArrayList;
+    private String date;
+    private String time;
 
-    public Recipe(){}
+    public ProgrammedRecipe(){}
 
-    public Recipe(long id, String name, String author, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList) {
+    public ProgrammedRecipe(Recipe recipe, String date, String time){
+        this.id = recipe.getId();
+        this.name = recipe.getName();
+        this.author = recipe.getAuthor();
+        this.kind = recipe.getKind();
+        this.peopleNumber = recipe.getPeopleNumber();
+        this.minutesDuration = recipe.getMinutesDuration();
+        this.ingredientsArrayList = recipe.getIngredientsArrayList();
+        this.stepsArrayList = recipe.getStepsArrayList();
+        this.date = date;
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public ProgrammedRecipe(long id, String name, String author, String kind, Integer peopleNumber, Integer minutesDuration, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList, String date, String time) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -24,6 +54,8 @@ public class Recipe {
         this.minutesDuration = minutesDuration;
         this.ingredientsArrayList = ingredientsArrayList;
         this.stepsArrayList = stepsArrayList;
+        this.date = date;
+        this.time = time;
     }
 
     public long getId() {
@@ -90,32 +122,13 @@ public class Recipe {
         this.stepsArrayList = stepsArrayList;
     }
 
-    public ArrayList<String> getTypes()
-    {
-        HashMap<String,Integer> types =  new HashMap<String,Integer>();
-        ArrayList<String> typesList =  new ArrayList<String>();
-        int total = 0;
-        for (Ingredient ingredient: ingredientsArrayList) {
-            String kind = ingredient.getKind();
-            int amount = ingredient.getGramAmount();
-            if (types.containsKey(kind))
-            {
-                types.put(kind,types.get(kind)+amount);
-            }
-            else
-            {
-                types.put(kind,amount);
-            }
-            total += ingredient.getGramAmount();
-        }
-
-        for (String type: types.keySet())
-        {
-            if (types.get(type) >= 1/4*total)
-            {
-                typesList.add(type);
-            }
-        }
-        return typesList;
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

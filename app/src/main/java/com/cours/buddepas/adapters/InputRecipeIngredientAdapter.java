@@ -5,8 +5,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cours.buddepas.R;
@@ -53,11 +57,13 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
         public EditText InputIngredientAmount;
         public EditText InputIngredientPrice;
         public EditText InputIngredientUnit;
+        public Spinner InputIngredientKind;
         public NameListener NameListener;
         public UnitListener UnitListener;
         public AmountListener AmountListener;
         public PriceListener PriceListener;
         public int pos;
+        private String type;
 
         public MyViewHolder(@NonNull View itemView, NameListener nListener, UnitListener uListener, AmountListener aListener, PriceListener pListener) {
             super(itemView);
@@ -65,6 +71,33 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
             this.UnitListener = uListener;
             this.AmountListener = aListener;
             this.PriceListener = pListener;
+            this.InputIngredientKind = itemView.findViewById(R.id.input_recipe_ingredient_kind);
+
+            //Kind
+            // Create an ArrayAdapter using the string array and a default spinner layout
+            ArrayAdapter<CharSequence> kindadapter = ArrayAdapter.createFromResource(itemView.getContext(), R.array.select_apport, android.R.layout.simple_spinner_item);
+            // Specify the layout to use when the list of choices appears
+            kindadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Apply the adapter to the spinner
+            InputIngredientKind.setAdapter(kindadapter);
+
+            InputIngredientKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view,
+                                           int p, long id) {
+                    type = (String) parent.getItemAtPosition(p);
+                    Ingredient newIngredient = recipeIngredientsList.get(pos);
+                    newIngredient.setKind(type);
+                    recipeIngredientsList.set(pos, newIngredient);
+
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    type = "Féculent";
+                    Ingredient newIngredient = recipeIngredientsList.get(pos);
+                    newIngredient.setKind(type);
+                    recipeIngredientsList.set(pos, newIngredient);
+                }
+            });
 
             //Name
             InputIngredientName = itemView
@@ -111,7 +144,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
     }
 
     public void AddNewIngredient(){
-        recipeIngredientsList.add(new Ingredient("Viande","",2,"kg",2));
+        recipeIngredientsList.add(new Ingredient("Viande","",2,"kg", (float) 2));
         notifyDataSetChanged();
     }
 
@@ -176,7 +209,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             Ingredient newIngredient = recipeIngredientsList.get(position);
             if(charSequence != null && !charSequence.toString().isEmpty()){
-                newIngredient.setPrice(Integer.valueOf(charSequence.toString()));
+                newIngredient.setPrice(Float.valueOf(charSequence.toString()));
             }
             recipeIngredientsList.set(position, newIngredient);
         }
