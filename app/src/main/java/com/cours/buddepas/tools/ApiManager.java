@@ -158,6 +158,11 @@ public class ApiManager {
         userRef.child("Ingredients/" + String.valueOf(ingredient.getName())).setValue(ingredient);
     }
 
+    public void DeleteIngredientStock(String ingredientName){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
+        userRef.child("Ingredients/" + ingredientName).removeValue();
+    }
 
     public void GetAllShopping(){
         singleton.setLoading(true);
@@ -187,5 +192,11 @@ public class ApiManager {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
         userRef.child("Shopping/" + String.valueOf(ingredient.getName())).setValue(ingredient);
+    }
+
+    public void DeleteIngredientShopping(String ingredientName){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
+        userRef.child("Shopping/" + ingredientName).removeValue();
     }
 }
