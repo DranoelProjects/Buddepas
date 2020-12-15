@@ -121,4 +121,14 @@ public class ProgrammedRecipe {
     public void setStepsArrayList(ArrayList<Step> stepsArrayList) {
         this.stepsArrayList = stepsArrayList;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }

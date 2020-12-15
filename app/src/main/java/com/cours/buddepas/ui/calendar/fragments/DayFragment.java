@@ -101,7 +101,7 @@ public class DayFragment extends Fragment implements DatePickerListener {
         picker
                 .setListener(this)
                 .setDays(60)
-                .setOffset(7)
+                .setOffset(0)
                 .setDateSelectedColor(resource.getColor(R.color.colorPrimary))
                 .setDateSelectedTextColor(Color.WHITE)
                 .setMonthAndYearTextColor(resource.getColor(R.color.colorPrimary))

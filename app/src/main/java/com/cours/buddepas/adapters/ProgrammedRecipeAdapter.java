@@ -51,7 +51,6 @@ public class ProgrammedRecipeAdapter extends RecyclerView.Adapter<ProgrammedReci
         }
 
         public void setRecipe(final ProgrammedRecipe programmedRecipe, final int position) {
-            Log.d("update", "ui");
             name.setText(programmedRecipe.getName());
             kind.setText(programmedRecipe.getKind());
         }
