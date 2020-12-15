@@ -40,6 +40,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -66,6 +67,7 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> recipesNamesArrayList = new ArrayList<>();
     Recipe recipeToAdd;
     ProgrammedRecipe programmedRecipe;
+    DatePickerDialog datePickerDialog;
 
     //UI
     private TextView textViewLoading;
@@ -135,24 +137,27 @@ public class CalendarFragment extends Fragment {
                 //DatePicker
                 final Calendar myCalendar = Calendar.getInstance();
                 final EditText editTextDatePicker= (EditText) popupView.findViewById(R.id.calendar_popup_date_picker);
+
+
                 final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        // TODO Auto-generated method stub
                         myCalendar.set(Calendar.YEAR, year);
                         myCalendar.set(Calendar.MONTH, monthOfYear);
                         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         updateLabel(editTextDatePicker, myCalendar);
                     }
                 };
+
                 editTextDatePicker.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        new DatePickerDialog(getActivity(), date, myCalendar
+                        datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar
                                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                                myCalendar.get(Calendar.DAY_OF_MONTH));
+                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+                        datePickerDialog.show();
                     }
                 });
                 updateLabel(editTextDatePicker, myCalendar);
