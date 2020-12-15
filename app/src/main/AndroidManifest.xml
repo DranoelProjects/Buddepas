@@ -22,8 +22,7 @@
         <activity android:name=".ui.ingredients.AddNewIngredientActivity"></activity>
         <activity android:name=".ui.shopping.AddIngredientShoppingActivity"></activity>
         <activity android:name=".ui.recipe.FilterRecipes"></activity>
-
-
+        <activity android:name=".ui.calendar.AddProgrammedRecipeActivity"></activity>
     </application>
 
 </manifest>

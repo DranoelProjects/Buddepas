@@ -35,6 +35,7 @@ import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
 import com.cours.buddepas.ui.calendar.fragments.DayFragment;
 import com.cours.buddepas.ui.calendar.fragments.ProgramFragment;
+import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -55,19 +56,11 @@ public class CalendarFragment extends Fragment {
     //UserData
     private boolean loading = true;
     private UserData userData;
-    private ArrayList<ProgrammedRecipe> programmedRecipeArrayList = new ArrayList<>();
 
     //Fragments
     View fragment;
     ViewPager viewPager;
     TabLayout tabLayout;
-
-    //PopUp
-    ArrayList<Recipe> recipesArrayList = new ArrayList<>();
-    ArrayList<String> recipesNamesArrayList = new ArrayList<>();
-    Recipe recipeToAdd;
-    ProgrammedRecipe programmedRecipe;
-    DatePickerDialog datePickerDialog;
 
     //UI
     private TextView textViewLoading;
@@ -84,11 +77,11 @@ public class CalendarFragment extends Fragment {
         new LoadingUserDataTask().execute();
 
         textViewLoading = fragment.findViewById(R.id.calendar_loading_user_data);
-        initPopup();
+        initUI();
         return fragment;
     }
 
-    private void initPopup(){
+    private void initUI(){
         viewPager = fragment.findViewById(R.id.calendar_view_pager);
         tabLayout = fragment.findViewById(R.id.calendar_tab_layout);
 
@@ -97,130 +90,8 @@ public class CalendarFragment extends Fragment {
         programRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // inflate the layout of the popup window
-                View popupView = LayoutInflater.from(fragment.getContext()).inflate(R.layout.popup_program_recipe, null);
-
-                recipesArrayList = singleton.getRecipesArrayList();
-                recipesNamesArrayList.clear();
-                if(recipesArrayList != null){
-                    for(int i=0;i<recipesArrayList.size();i++){
-                        recipesNamesArrayList.add(recipesArrayList.get(i).getName());
-                    }
-                }
-                //initalizing views in popup
-                final Button btnCancel = popupView.findViewById(R.id.close_calendar_pop_up);
-                final Button btnSubmit = popupView.findViewById(R.id.add_recipe_to_calendar_button);
-                final EditText inputPeopleNumber = popupView.findViewById(R.id.calendar_input_people_number);
-
-                //AutoComplete Recipes list
-                final AutoCompleteTextView atvRecipes = popupView.findViewById(R.id.calendar_input_selected_recipe);
-                atvRecipes.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, recipesNamesArrayList));
-                atvRecipes.setThreshold(1);
-                atvRecipes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            if (recipesNamesArrayList.size() == 0 ||
-                                    recipesNamesArrayList.indexOf(atvRecipes.getText().toString()) == -1) {
-                                atvRecipes.setError("Recette invalide.");
-                            };
-                        }
-                    }
-                });
-
-                //Time picker
-                final Spinner spinner = (Spinner) popupView.findViewById(R.id.calendar_popup_input_time);
-                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                        R.array.time_array, android.R.layout.simple_spinner_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-
-                //DatePicker
-                final Calendar myCalendar = Calendar.getInstance();
-                final EditText editTextDatePicker= (EditText) popupView.findViewById(R.id.calendar_popup_date_picker);
-
-
-                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, monthOfYear);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateLabel(editTextDatePicker, myCalendar);
-                    }
-                };
-
-                editTextDatePicker.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar
-                                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                                myCalendar.get(Calendar.DAY_OF_MONTH));
-                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
-                        datePickerDialog.show();
-                    }
-                });
-                updateLabel(editTextDatePicker, myCalendar);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.MATCH_PARENT;
-                int height = LinearLayout.LayoutParams.MATCH_PARENT;
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-                popupWindow.setOutsideTouchable(false);
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //Close the pop up
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        popupWindow.dismiss();
-                    }
-                });
-
-                btnSubmit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        btnSubmit.setEnabled(false);
-                        btnCancel.setEnabled(false);
-                        for (int i = 0; i < recipesArrayList.size(); i++)
-                        {
-                            if (atvRecipes.getText().toString().toLowerCase().equals(recipesArrayList.get(i).getName().toLowerCase()))
-                            {
-                                recipeToAdd = recipesArrayList.get(i);
-                                break;
-                            }
-                        }
-                        recipeToAdd.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
-
-                        //We need to change amount of ingredients before
-                        String myFormat = "dd-MM-yyyy"; //In which you need put here
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                        programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
-                        userData = singleton.getCurrentUserData();
-                        if(userData == null){
-                            userData = new UserData();
-                        }
-                        if(userData.getProgrammedRecipeArrayList() != null){
-                            programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
-                            programmedRecipeArrayList.add(programmedRecipe);
-                        } else {
-                            programmedRecipeArrayList.add(programmedRecipe);
-                        }
-                        userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
-                        apiManager.SetUserData(userData);
-                        Toast.makeText(getActivity(), "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                popupWindow.dismiss();
-                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(myIntent);
-                            }
-                        }, 1000);
-                    }
-                });
+                Intent myIntent = new Intent(getActivity(), AddProgrammedRecipeActivity.class);
+                startActivity(myIntent);
             }
         });
     }
@@ -254,12 +125,6 @@ public class CalendarFragment extends Fragment {
         adapter.addFragment(new ProgramFragment(), "Programme");
 
         viewPager.setAdapter(adapter);
-    }
-
-    private void updateLabel(EditText editTextDatePicker, Calendar myCalendar) {
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        editTextDatePicker.setText(sdf.format(myCalendar.getTime()));
     }
 
     class LoadingUserDataTask extends AsyncTask<Integer, Integer, String> {
