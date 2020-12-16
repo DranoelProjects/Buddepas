@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.RecipeAdapter;
+import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
@@ -52,6 +54,9 @@ public class RecipeProposedActivity extends AppCompatActivity {
     //UI
     private ListView listView;
 
+    //UserData
+    private UserData userData;
+
     private ArrayList<Recipe> recipesArrayList = new ArrayList();
 
     @Override
@@ -72,8 +77,49 @@ public class RecipeProposedActivity extends AppCompatActivity {
                 String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 Calendar c = Calendar.getInstance();
+
+                int number_people_initial = recipesArrayList.get(i).getPeopleNumber();
+                final EditText inputPeopleNumber = findViewById(R.id.generate_input_people_number);
+
                 ProgrammedRecipe programmedRecipe = new ProgrammedRecipe(recipesArrayList.get(i), sdf.format(c.getTime()), time);
-                UserData userData = singleton.getCurrentUserData();
+
+                programmedRecipe.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
+
+                ArrayList<Ingredient> ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                for(int j = 0; j<programmedRecipe.getIngredientsArrayList().size(); j++){
+                    Ingredient ingredient = ingredientArrayList.get(j);
+                    ingredient.setAmount(ingredient.getAmount() * programmedRecipe.getPeopleNumber()/number_people_initial);
+                    ingredientArrayList.set(j, ingredient);
+                }
+                programmedRecipe.setIngredientsArrayList(ingredientArrayList);
+
+                userData = singleton.getCurrentUserData();
+
+                ArrayList<Ingredient> stockIngredients = userData.getStockArrayList();
+                ArrayList<Ingredient> shoppingIngredients = userData.getShoppingArrayList();
+
+                if(shoppingIngredients == null){
+                    shoppingIngredients = new ArrayList<Ingredient>();
+                }
+
+                ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                for(int j=0; j<ingredientArrayList.size(); j++){
+                    if(stockIngredients != null){
+                        if(stockIngredients.contains(ingredientArrayList.get(j).getName())) {
+                            Ingredient currentIngredient = stockIngredients.get(j);
+
+                            if (currentIngredient.getAmount() < ingredientArrayList.get(j).getAmount()) {
+                                currentIngredient.setAmount(ingredientArrayList.get(j).getAmount() - currentIngredient.getAmount());
+                            }
+                            shoppingIngredients.add(currentIngredient);
+                        } else {
+                            shoppingIngredients.add(ingredientArrayList.get(j));
+                        }
+                    }
+                    else{
+                        shoppingIngredients.add(ingredientArrayList.get(j));
+                    }
+                }
                 if(userData == null){
                     userData = new UserData();
                 }
@@ -84,6 +130,8 @@ public class RecipeProposedActivity extends AppCompatActivity {
                 } else {
                     programmedRecipeArrayList.add(programmedRecipe);
                 }
+                userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
+                userData.setShoppingArrayList(shoppingIngredients);
                 userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
                 apiManager.SetUserData(userData);
                 Toast.makeText(RecipeProposedActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();

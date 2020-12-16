@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <TextView
         android:id="@+id/generate_label"
         android:layout_width="wrap_content"
@@ -60,6 +59,25 @@
         app:layout_constraintStart_toStartOf="@+id/generatetype"
         app:layout_constraintTop_toBottomOf="@+id/generatetype" />
 
+    <TextView
+        android:id="@+id/generate_ask_people_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@+id/periode_label"
+        app:layout_constraintStart_toStartOf="@+id/periode_label"
+        android:text="@string/title_ask_people_number" />
+
+    <EditText
+        android:id="@+id/generate_input_people_number"
+        android:layout_width="wrap_content"
+        android:text="2"
+        android:minWidth="60dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@+id/generate_ask_people_number"
+        app:layout_constraintTop_toBottomOf="@+id/generate_ask_people_number"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/actuallygenerate"
         android:layout_width="0dp"
@@ -71,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generatetime" />
+        app:layout_constraintTop_toBottomOf="@+id/generate_input_people_number" />
 
     <ListView
         android:id="@+id/recipes_proposed"

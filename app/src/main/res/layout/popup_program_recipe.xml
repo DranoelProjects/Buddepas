@@ -123,23 +123,23 @@
                 android:layout_marginEnd="20dp" />
 
             <Button
-                android:id="@+id/add_recipe_to_calendar_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/confirm"
-                android:textColor="@color/white"
-                android:background="@color/colorPrimary"/>
-
-            <Button
                 android:id="@+id/generaterecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                android:layout_marginRight="20dp"
                 android:background="@color/colorPrimary"
                 android:layout_marginTop="20dp"
                 android:text="@string/generate" />
+
+            <Button
+                android:id="@+id/add_recipe_to_calendar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"/>
 
         </LinearLayout>
 
