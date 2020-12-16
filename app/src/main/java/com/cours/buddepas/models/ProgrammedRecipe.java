@@ -1,6 +1,7 @@
 package com.cours.buddepas.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProgrammedRecipe {
     private long id;
@@ -120,6 +121,44 @@ public class ProgrammedRecipe {
 
     public void setStepsArrayList(ArrayList<Step> stepsArrayList) {
         this.stepsArrayList = stepsArrayList;
+    }
+
+    public float getPrice()
+    {
+        float price = 0;
+        for (Ingredient ingredient:ingredientsArrayList) {
+            price+= ingredient.getPrice();
+        }
+        return price;
+    }
+
+    public ArrayList<String> getTypes()
+    {
+        HashMap<String,Integer> types =  new HashMap<String,Integer>();
+        ArrayList<String> typesList =  new ArrayList<String>();
+        int total = 0;
+        for (Ingredient ingredient: ingredientsArrayList) {
+            String kind = ingredient.getKind();
+            int amount = ingredient.getGramAmount();
+            if (types.containsKey(kind))
+            {
+                types.put(kind,types.get(kind)+amount);
+            }
+            else
+            {
+                types.put(kind,amount);
+            }
+            total += ingredient.getGramAmount();
+        }
+
+        for (String type: types.keySet())
+        {
+            if (types.get(type) >= 1/4*total)
+            {
+                typesList.add(type);
+            }
+        }
+        return typesList;
     }
 
     @Override

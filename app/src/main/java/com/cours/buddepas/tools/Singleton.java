@@ -132,6 +132,11 @@ public class Singleton {
         this.filter = f;
     }
 
+    public Filter getFilter()
+    {
+        return this.filter;
+    }
+
     private ArrayList<Recipe> completeFiltered()
     {
         ArrayList<Recipe> filtered = new ArrayList<Recipe>();

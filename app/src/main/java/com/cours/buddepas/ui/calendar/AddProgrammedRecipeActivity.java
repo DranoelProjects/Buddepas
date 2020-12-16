@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -26,6 +27,8 @@ import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
+import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
+import com.cours.buddepas.ui.recipe.RecipeProposedActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,6 +70,7 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
         //initalizing views in popup
         final Button btnCancel = findViewById(R.id.close_calendar_pop_up);
         final Button btnSubmit = findViewById(R.id.add_recipe_to_calendar_button);
+        final Button btnPropose = findViewById(R.id.generaterecipe);
         final EditText inputPeopleNumber = findViewById(R.id.calendar_input_people_number);
 
         //AutoComplete Recipes list
@@ -174,6 +178,26 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                 }, 1000);
             }
         });
+
+
+
+        btnPropose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent myIntent = new Intent(AddProgrammedRecipeActivity.this, RecipeProposedActivity.class);
+                        startActivity(myIntent);
+                    }
+                }, 1000);
+            }
+        });
+
+
+
+
     }
 
     private void updateLabel(EditText editTextDatePicker, Calendar myCalendar) {

@@ -118,4 +118,13 @@ public class Recipe {
         }
         return typesList;
     }
+
+    public float getPrice()
+    {
+        float price = 0;
+        for (Ingredient ingredient:ingredientsArrayList) {
+            price+= ingredient.getPrice();
+        }
+        return price;
+    }
 }
