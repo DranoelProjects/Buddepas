@@ -96,22 +96,32 @@ public class GenerateRecipe {
         for (String type:res) {
             if (types.containsKey(type))
             {
-                //if (types.get(type) <7*4/res.size())
-                //{
+                if (types.get(type) <=7*4/res.size())
+                {
                     missingtypes.add(type);
-                //}
+                }
             }
 
         }
-
+        if (missingtypes.size() == 0)
+        {
+            missingtypes = res;
+        }
         ArrayList<Recipe> recipeslist = new ArrayList<Recipe>();
         Filter oldfilter = singleton.getFilter();
         Filter newfilter;
         for (String type: res) {
 
             newfilter = new Filter("", "",kind, type, -1);
-            //singleton.setFilter(newfilter);
-            recipeslist.addAll(singleton.getRecipesArrayList());
+            singleton.setFilter(newfilter);
+            ArrayList<Recipe> gatherrecipes = singleton.getRecipesArrayList();
+            for (Recipe r:gatherrecipes) {
+                if (!recipeslist.contains(r))
+                {
+                    recipeslist.add(r);
+                }
+            }
+
         }
         singleton.setFilter(oldfilter);
         float nbhalf = 7*2 - halfprice;
@@ -129,10 +139,10 @@ public class GenerateRecipe {
         ArrayList<Recipe> finallist = new ArrayList<Recipe>();
 
         for (Recipe recipe:recipeslist) {
-            //if (recipe.getPrice() <= budgetleft)
-            //{
+            if (recipe.getPrice() <= budgetleft)
+            {
                 finallist.add(recipe);
-            //}
+            }
         }
         return finallist;
     }
