@@ -93,6 +93,10 @@ public class GenerateRecipe {
         res.add("Féculents");
         res.add("Légumes");
         res.add("Viande");
+        res.add("Fruit");
+        res.add("Poisson");
+        res.add("Fromage");
+        res.add("Autre");
         for (String type:res) {
             if (types.containsKey(type))
             {
