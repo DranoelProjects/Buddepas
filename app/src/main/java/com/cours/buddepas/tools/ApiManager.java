@@ -137,7 +137,7 @@ public class ApiManager {
     public void GetAllIngredients(){
         singleton.setLoading(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/Ingredients");
+        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/stockArrayList");
         ingredientsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -158,7 +158,7 @@ public class ApiManager {
         });
     }
 
-    public ArrayList<Ingredient> GetAllIngredientsinArray(){
+    /*public ArrayList<Ingredient> GetAllIngredientsinArray(){
         final List<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();
         singleton.setLoading(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -179,25 +179,26 @@ public class ApiManager {
             }
         });
         return (ArrayList<Ingredient>) ingredientsArrayList;
-    }
+    }*/
 
     public void AddNewIngredient(Ingredient ingredient){
         //adding new recipe to database
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
-        userRef.child("Ingredients/" + String.valueOf(ingredient.getName())).setValue(ingredient);
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid() + "/stockArrayList");
+        ingredient.setId(maxId+1);
+        userRef.child(String.valueOf(maxId+1)).setValue(ingredient);
     }
 
-    public void DeleteIngredientStock(String ingredientName){
+    public void DeleteIngredientStock(long ingredientID){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
-        userRef.child("Ingredients/" + ingredientName).removeValue();
+        DatabaseReference userRef = database.getReference().child("users/"+user.getUid() + "/stockArrayList");
+        userRef.child(String.valueOf(ingredientID)).removeValue();
     }
 
     public void GetAllShopping(){
         singleton.setLoading(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/Shopping");
+        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/shoppingArrayList");
         ingredientsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -221,13 +222,13 @@ public class ApiManager {
         //adding new recipe to database
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
-        userRef.child("Shopping/" + String.valueOf(ingredient.getName())).setValue(ingredient);
+        userRef.child("shoppingArrayList/" + String.valueOf(maxId+1)).push().setValue(ingredient);
     }
 
-    public void DeleteIngredientShopping(String ingredientName){
+    public void DeleteIngredientShopping(long ingredientID){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
-        userRef.child("Shopping/" + ingredientName).removeValue();
+        userRef.child("shoppingArrayList/" + ingredientID).removeValue();
     }
 
 

@@ -107,6 +107,7 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
         }
 
         Ingredient newIngredient = new Ingredient(
+                0,
                 type,
                 ingredient_name.getText().toString(),
                 Integer.valueOf(ingredient_quantity.getText().toString()),

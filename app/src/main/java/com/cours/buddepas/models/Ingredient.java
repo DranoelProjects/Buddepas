@@ -1,6 +1,7 @@
 package com.cours.buddepas.models;
 
 public class Ingredient {
+    private long id;
     private String kind;
     private String name;
     private Integer amount;
@@ -9,13 +10,20 @@ public class Ingredient {
 
     public Ingredient(){}
 
-    public Ingredient(String kind, String name, Integer amount, String unit, Float price) {
+    public Ingredient(Integer id, String kind, String name, Integer amount, String unit, Float price) {
+        this.id = id;
         this.kind = kind;
         this.name = name;
         this.amount = amount;
         this.unit = unit;
         this.price = price;
     }
+
+    public long getId(){
+        return id;
+    }
+
+    public void setId(long id){this.id = id;}
 
     public String getName() {
         return name;

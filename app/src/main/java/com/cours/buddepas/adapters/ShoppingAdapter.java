@@ -50,7 +50,7 @@ public class ShoppingAdapter extends BaseAdapter{
         view = inflater.inflate(R.layout.shopping_adapter,null);
 
         //get information about ingredient
-        Ingredient currentIngredient=getItem(i);
+        final Ingredient currentIngredient=getItem(i);
         final String ingredientName = currentIngredient.getName();
         String ingredientKind = currentIngredient.getKind();
         String ingredientUnit = currentIngredient.getUnit();
@@ -77,7 +77,7 @@ public class ShoppingAdapter extends BaseAdapter{
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                apiManager.DeleteIngredientShopping(ingredientName);
+                apiManager.DeleteIngredientShopping(currentIngredient.getId());
                 Toast.makeText(context, ingredientName + " : ingrédient supprimé", Toast.LENGTH_SHORT).show();
 
                 final Handler handler = new Handler();

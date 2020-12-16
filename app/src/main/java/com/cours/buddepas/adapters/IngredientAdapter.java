@@ -48,7 +48,7 @@ public class IngredientAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.ingredient_adapter,null);
 
         //get information about ingredient
-        Ingredient currentIngredient=getItem(i);
+        final Ingredient currentIngredient=getItem(i);
         final String ingredientName = currentIngredient.getName();
         String ingredientKind = currentIngredient.getKind();
         Integer ingredientQuantity = currentIngredient.getAmount();
@@ -71,7 +71,7 @@ public class IngredientAdapter extends BaseAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                apiManager.DeleteIngredientStock(ingredientName);
+                apiManager.DeleteIngredientStock(currentIngredient.getId());
                 Toast.makeText(context, ingredientName + " : ingrédient supprimé", Toast.LENGTH_SHORT).show();
 
                 final Handler handler = new Handler();

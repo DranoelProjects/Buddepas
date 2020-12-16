@@ -153,36 +153,46 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                 int number_people_initial = recipeToAdd.getPeopleNumber();
                 recipeToAdd.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
 
-                ArrayList<Ingredient> ingredientArrayList = recipeToAdd.getIngredientsArrayList();
-                for(int i = 0; i<recipeToAdd.getIngredientsArrayList().size(); i++){
-                    Ingredient ingredient = ingredientArrayList.get(i);
-                    ingredient.setAmount(ingredient.getAmount() * recipeToAdd.getPeopleNumber()/number_people_initial);
-                    ingredientArrayList.set(i, ingredient);
-                }
-                recipeToAdd.setIngredientsArrayList(ingredientArrayList);
-
-                ArrayList<Ingredient> stockIngredients = apiManager.GetAllIngredientsinArray();
-                ingredientArrayList = recipeToAdd.getIngredientsArrayList();
-                for(int i=0; i<ingredientArrayList.size(); i++){
-                    if(stockIngredients.contains(ingredientArrayList.get(i).getName())){
-                        int currentIngredientIndex = stockIngredients.indexOf(ingredientArrayList.get(i).getName());
-                        Ingredient currentIngredient = stockIngredients.get(currentIngredientIndex);
-
-                        if(currentIngredient.getAmount() < ingredientArrayList.get(i).getAmount()){
-                            currentIngredient.setAmount(ingredientArrayList.get(i).getAmount() - currentIngredient.getAmount());
-                        }
-                        Log.d(TAG,"je suis passé par ici");
-                    }
-                    else{
-                        apiManager.AddIngredientShopping(ingredientArrayList.get(i));
-                    }
-                }
-
                 //We need to change amount of ingredients before
                 String myFormat = "dd-MM-yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
+
+                ArrayList<Ingredient> ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                for(int i = 0; i<programmedRecipe.getIngredientsArrayList().size(); i++){
+                    Ingredient ingredient = ingredientArrayList.get(i);
+                    ingredient.setAmount(ingredient.getAmount() * programmedRecipe.getPeopleNumber()/number_people_initial);
+                    ingredientArrayList.set(i, ingredient);
+                }
+                programmedRecipe.setIngredientsArrayList(ingredientArrayList);
+
                 userData = singleton.getCurrentUserData();
+
+                ArrayList<Ingredient> stockIngredients = userData.getStockArrayList();
+                ArrayList<Ingredient> shoppingIngredients = userData.getShoppingArrayList();
+
+                if(shoppingIngredients == null){
+                    shoppingIngredients = new ArrayList<Ingredient>();
+                }
+
+                ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                for(int i=0; i<ingredientArrayList.size(); i++){
+                    if(stockIngredients != null){
+                        if(stockIngredients.contains(ingredientArrayList.get(i).getName())) {
+                            Ingredient currentIngredient = stockIngredients.get(i);
+
+                            if (currentIngredient.getAmount() < ingredientArrayList.get(i).getAmount()) {
+                                currentIngredient.setAmount(ingredientArrayList.get(i).getAmount() - currentIngredient.getAmount());
+                            }
+                            shoppingIngredients.add(currentIngredient);
+                        }
+                    }
+                    else{
+                        shoppingIngredients.add(ingredientArrayList.get(i));
+                    }
+                }
+
+
                 if(userData == null){
                     userData = new UserData();
                     Log.d(TAG, "new userdata");
@@ -194,6 +204,7 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                     programmedRecipeArrayList.add(programmedRecipe);
                 }
                 userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
+                userData.setShoppingArrayList(shoppingIngredients);
                 apiManager.SetUserData(userData);
 
                 Toast.makeText(AddProgrammedRecipeActivity.this, "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
