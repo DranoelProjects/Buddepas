@@ -21,6 +21,7 @@ import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
+import com.cours.buddepas.ui.calendar.AddProgrammedRecipeActivity;
 import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
 
 import java.util.ArrayList;
@@ -107,22 +108,21 @@ public class AddNewIngredientActivity extends AppCompatActivity {
             author = singleton.getCurrentUserData().getUsername();
         }
 
-        Ingredient newIngredient = new Ingredient(
-                type,
-                ingredient_name.getText().toString(),
-                Integer.valueOf(ingredient_quantity.getText().toString()),
-                ingredient_unit.getText().toString(),
-                (float) 0
-        );
-
         boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit});
 
-        if(fieldsOK){
+        if(fieldsOK && !ingredient_quantity.getText().toString().isEmpty() && !ingredient_unit.getText().toString().isEmpty()){
             UserData userData = singleton.getCurrentUserData();
             ArrayList<Ingredient> stockArrayList = userData.getStockArrayList();
             if(stockArrayList == null){
                 stockArrayList = new ArrayList<>();
             }
+            Ingredient newIngredient = new Ingredient(
+                    type,
+                    ingredient_name.getText().toString(),
+                    Integer.valueOf(ingredient_quantity.getText().toString()),
+                    ingredient_unit.getText().toString(),
+                    (float) 0
+            );
             stockArrayList.add(newIngredient);
             userData.setStockArrayList(stockArrayList);
             apiManager.SetUserData(userData);

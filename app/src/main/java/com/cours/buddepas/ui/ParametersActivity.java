@@ -20,6 +20,7 @@ import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
 import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
+import com.cours.buddepas.ui.shopping.AddIngredientShoppingActivity;
 
 public class ParametersActivity extends AppCompatActivity {
     //Instances
@@ -55,18 +56,22 @@ public class ParametersActivity extends AppCompatActivity {
         buttonSubmitParameters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userData = singleton.getCurrentUserData();
-                userData.setUsername(editTextUsername.getText().toString());
-                userData.setBudget(Integer.parseInt(editTextBudget.getText().toString()));
-                apiManager.SetUserData(userData);
-                Toast.makeText(ParametersActivity.this, "Modification effectuée", Toast.LENGTH_SHORT).show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 1000);
+                if(!editTextUsername.getText().toString().isEmpty() && !editTextBudget.getText().toString().isEmpty()){
+                    userData = singleton.getCurrentUserData();
+                    userData.setUsername(editTextUsername.getText().toString());
+                    userData.setBudget(Integer.parseInt(editTextBudget.getText().toString()));
+                    apiManager.SetUserData(userData);
+                    Toast.makeText(ParametersActivity.this, "Modification effectuée", Toast.LENGTH_SHORT).show();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1000);
+                } else {
+                    Toast.makeText(ParametersActivity.this , "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

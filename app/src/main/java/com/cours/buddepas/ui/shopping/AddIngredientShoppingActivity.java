@@ -109,21 +109,21 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
             author = singleton.getCurrentUserData().getUsername();
         }
 
-        Ingredient newIngredient = new Ingredient(
-                type,
-                ingredient_name.getText().toString(),
-                Integer.valueOf(ingredient_quantity.getText().toString()),
-                ingredient_unit.getText().toString(),
-                Float.valueOf(ingredient_price.getText().toString().replace(",","."))
-        );
 
         boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit, ingredient_price});
-        if(fieldsOK) {
+        if(fieldsOK && !ingredient_quantity.getText().toString().isEmpty() && !ingredient_unit.getText().toString().isEmpty()) {
             UserData userData = singleton.getCurrentUserData();
             ArrayList<Ingredient> shoppingArrayList = userData.getShoppingArrayList();
             if(shoppingArrayList == null){
                 shoppingArrayList = new ArrayList<>();
             }
+            Ingredient newIngredient = new Ingredient(
+                    type,
+                    ingredient_name.getText().toString(),
+                    Integer.valueOf(ingredient_quantity.getText().toString()),
+                    ingredient_unit.getText().toString(),
+                    Float.valueOf(ingredient_price.getText().toString().replace(",","."))
+            );
             shoppingArrayList.add(newIngredient);
             userData.setShoppingArrayList(shoppingArrayList);
             apiManager.SetUserData(userData);

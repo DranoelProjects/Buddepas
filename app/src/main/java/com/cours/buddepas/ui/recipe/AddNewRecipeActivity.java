@@ -26,6 +26,7 @@ import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
+import com.cours.buddepas.ui.ParametersActivity;
 
 import java.util.ArrayList;
 
@@ -157,35 +158,39 @@ public class AddNewRecipeActivity extends AppCompatActivity {
     }
 
     private void submitRecipe(){
-        String author = "Anonyme";
-        if(singleton.getCurrentUserData() != null && singleton.getCurrentUserData().getUsername() != null){
-            author = singleton.getCurrentUserData().getUsername();
-        }
+        if(!npPeopleNumber.getText().toString().isEmpty() && !npDuration.getText().toString().isEmpty()){
+            String author = "Anonyme";
+            if(singleton.getCurrentUserData() != null && singleton.getCurrentUserData().getUsername() != null){
+                author = singleton.getCurrentUserData().getUsername();
+            }
 
-        Recipe newRecipe = new Recipe(
-                0,
-                editTextRecipeName.getText().toString(),
-                author,
-                kind,
-                Integer.valueOf(npPeopleNumber.getText().toString()),
-                Integer.valueOf(npDuration.getText().toString()),
-                (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
-                (ArrayList) recipeStepAdapter.getRecipeStepsList()
-        );
+            Recipe newRecipe = new Recipe(
+                    0,
+                    editTextRecipeName.getText().toString(),
+                    author,
+                    kind,
+                    Integer.valueOf(npPeopleNumber.getText().toString()),
+                    Integer.valueOf(npDuration.getText().toString()),
+                    (ArrayList) recipeIngredientAdapter.getRecipeIngredientsList(),
+                    (ArrayList) recipeStepAdapter.getRecipeStepsList()
+            );
 
-        boolean fieldsOK = validate(new EditText[]{editTextRecipeName, npPeopleNumber, npDuration});
-        if(fieldsOK) {
-            apiManager.AddNewRecipe(newRecipe);
-            Toast.makeText(AddNewRecipeActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
+            boolean fieldsOK = validate(new EditText[]{editTextRecipeName, npPeopleNumber, npDuration});
+            if(fieldsOK) {
+                apiManager.AddNewRecipe(newRecipe);
+                Toast.makeText(AddNewRecipeActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
 
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent myIntent = new Intent(AddNewRecipeActivity.this, MainActivity.class);
-                    startActivity(myIntent);
-                }
-            }, 2000);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent myIntent = new Intent(AddNewRecipeActivity.this, MainActivity.class);
+                        startActivity(myIntent);
+                    }
+                }, 2000);
+            }
+        }else {
+            Toast.makeText(AddNewRecipeActivity.this , "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
         }
     }
 

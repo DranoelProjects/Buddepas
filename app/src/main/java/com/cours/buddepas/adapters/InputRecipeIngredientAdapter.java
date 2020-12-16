@@ -209,7 +209,7 @@ public class InputRecipeIngredientAdapter extends RecyclerView.Adapter<InputReci
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             Ingredient newIngredient = recipeIngredientsList.get(position);
             if(charSequence != null && !charSequence.toString().isEmpty()){
-                newIngredient.setPrice(Float.valueOf(charSequence.toString()));
+                newIngredient.setPrice(Float.valueOf(charSequence.toString().replace(",",".")));
             }
             recipeIngredientsList.set(position, newIngredient);
         }
