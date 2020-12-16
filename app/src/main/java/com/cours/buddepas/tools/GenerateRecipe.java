@@ -3,7 +3,6 @@ package com.cours.buddepas.tools;
 import android.content.res.Resources;
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
 
 import com.cours.buddepas.R;
 import com.cours.buddepas.models.Filter;
@@ -32,9 +31,7 @@ public class GenerateRecipe {
         this.date = date;
         this.kind = kind;
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<Recipe> generate()
+    public ArrayList<Recipe> generate(Resources resources)
     {
         String[] tempdate = date.split("-");
         int day = Integer.valueOf(tempdate[0]);
@@ -91,13 +88,20 @@ public class GenerateRecipe {
         }
         ArrayList<String> missingtypes = new ArrayList<String>();
         int minquantity = 7;
-        ArrayList<String> res = new ArrayList<String>(Arrays.asList(Resources.getSystem().getStringArray(R.array.apport_recette)));
-        res.remove("");
+        //Resources r = getResources();
+        ArrayList<String> res = new ArrayList<String>();// new ArrayList<String>(Arrays.asList(resources.getStringArray(R.array.select_apport)));
+        res.add("Féculents");
+        res.add("Légumes");
+        res.add("Viande");
         for (String type:res) {
-            if (types.get(res) <7*4/res.size())
+            if (types.containsKey(type))
             {
-                missingtypes.add(type);
+                //if (types.get(type) <7*4/res.size())
+                //{
+                    missingtypes.add(type);
+                //}
             }
+
         }
 
         ArrayList<Recipe> recipeslist = new ArrayList<Recipe>();
@@ -106,7 +110,7 @@ public class GenerateRecipe {
         for (String type: res) {
 
             newfilter = new Filter("", "",kind, type, -1);
-            singleton.setFilter(newfilter);
+            //singleton.setFilter(newfilter);
             recipeslist.addAll(singleton.getRecipesArrayList());
         }
         singleton.setFilter(oldfilter);
@@ -125,13 +129,12 @@ public class GenerateRecipe {
         ArrayList<Recipe> finallist = new ArrayList<Recipe>();
 
         for (Recipe recipe:recipeslist) {
-            if (recipe.getPrice() <= budgetleft)
-            {
+            //if (recipe.getPrice() <= budgetleft)
+            //{
                 finallist.add(recipe);
-            }
+            //}
         }
         return finallist;
     }
-
 
 }

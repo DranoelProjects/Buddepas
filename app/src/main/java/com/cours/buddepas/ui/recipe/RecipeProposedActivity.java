@@ -1,6 +1,7 @@
 package com.cours.buddepas.ui.recipe;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -68,7 +69,8 @@ public class RecipeProposedActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                ProgrammedRecipe programmedRecipe = new ProgrammedRecipe(recipesArrayList.get(i), time, kind);
+                Calendar c = Calendar.getInstance();
+                ProgrammedRecipe programmedRecipe = new ProgrammedRecipe(recipesArrayList.get(i), sdf.format(c.getTime()), time);
                 UserData userData = singleton.getCurrentUserData();
                 if(userData == null){
                     userData = new UserData();
@@ -95,14 +97,14 @@ public class RecipeProposedActivity extends AppCompatActivity {
             }
         });
 
-        Spinner typespinner = (Spinner) findViewById(R.id.generatetype);
-        Spinner timespinner = (Spinner) findViewById(R.id.generatetime);
+        Spinner typespinner = findViewById(R.id.generatetype);
+        Spinner timespinner = findViewById(R.id.generatetime);
 
-        ArrayAdapter<CharSequence> typeadapter = ArrayAdapter.createFromResource(RecipeProposedActivity.this, R.array.select_type, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> typeadapter = ArrayAdapter.createFromResource(this, R.array.select_type, android.R.layout.simple_spinner_item);
         typeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typespinner.setAdapter(typeadapter);
 
-        ArrayAdapter<CharSequence> timeadapter = ArrayAdapter.createFromResource(RecipeProposedActivity.this, R.array.time_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> timeadapter = ArrayAdapter.createFromResource(this, R.array.time_array, android.R.layout.simple_spinner_item);
         timeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         timespinner.setAdapter(timeadapter);
@@ -132,13 +134,15 @@ public class RecipeProposedActivity extends AppCompatActivity {
 
         Button proposebutton = (Button) findViewById(R.id.actuallygenerate);
         proposebutton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             public void onClick(View v) {
 
                 singleton.cancelFilter();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
                 Calendar c = Calendar.getInstance();
-                recipesArrayList = (new GenerateRecipe(sdf.format(c.getTime()),kind)).generate();
+                Resources r = getResources();
+                recipesArrayList = (new GenerateRecipe(sdf.format(c.getTime()),kind)).generate(r);
+                Toast.makeText(RecipeProposedActivity.this, "Recipes : "+recipesArrayList.size(), Toast.LENGTH_SHORT).show();
+                listView.setAdapter(new RecipeAdapter(RecipeProposedActivity.this, recipesArrayList));
             }
         });
 
