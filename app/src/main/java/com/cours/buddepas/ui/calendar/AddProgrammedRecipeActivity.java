@@ -174,7 +174,6 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                 ingredientArrayList = programmedRecipe.getIngredientsArrayList();
                 for(int i=0; i<ingredientArrayList.size(); i++){
                     if(stockIngredients != null){
-                        Log.d("stock", ingredientArrayList.toString());
                         if(stockIngredients.contains(ingredientArrayList.get(i).getName())) {
                             Ingredient currentIngredient = stockIngredients.get(i);
 
