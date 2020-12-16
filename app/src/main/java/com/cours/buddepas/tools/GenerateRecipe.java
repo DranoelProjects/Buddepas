@@ -8,6 +8,8 @@ import com.cours.buddepas.R;
 import com.cours.buddepas.models.Filter;
 import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
+import com.cours.buddepas.models.UserData;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -138,7 +140,13 @@ public class GenerateRecipe {
         {
             nbnormal = 0;
         }
-        int budget = singleton.getCurrentUserData().getBudget();
+        int budget;
+        UserData userData = singleton.getCurrentUserData();
+        if(userData != null) {
+            budget = singleton.getCurrentUserData().getBudget();
+        } else {
+            budget = 0;
+        }
         float budgetleft = (budget-totalprice)/(nbhalf/2 + nbnormal);
         ArrayList<Recipe> finallist = new ArrayList<Recipe>();
 

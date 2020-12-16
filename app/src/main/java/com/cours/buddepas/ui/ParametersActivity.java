@@ -58,6 +58,9 @@ public class ParametersActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!editTextUsername.getText().toString().isEmpty() && !editTextBudget.getText().toString().isEmpty()){
                     userData = singleton.getCurrentUserData();
+                    if(userData == null){
+                        userData = new UserData();
+                    }
                     userData.setUsername(editTextUsername.getText().toString());
                     userData.setBudget(Integer.parseInt(editTextBudget.getText().toString()));
                     apiManager.SetUserData(userData);

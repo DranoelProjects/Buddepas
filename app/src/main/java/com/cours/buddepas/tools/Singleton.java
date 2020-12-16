@@ -119,11 +119,17 @@ public class Singleton {
     }
 
     public ArrayList<Ingredient> getIngredientsArrayList() {
-        return currentUserData.getStockArrayList();
+        if(currentUserData != null){
+            return currentUserData.getStockArrayList();
+        }
+        return new ArrayList<Ingredient>();
     }
 
     public ArrayList<Ingredient> getShoppingArrayList() {
-        return currentUserData.getShoppingArrayList();
+        if(currentUserData != null){
+            return currentUserData.getShoppingArrayList();
+        }
+        return new ArrayList<Ingredient>();
     }
 
     public void setFilter(Filter f)
