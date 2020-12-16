@@ -52,16 +52,19 @@ public class IngredientAdapter extends BaseAdapter {
         final String ingredientName = currentIngredient.getName();
         String ingredientKind = currentIngredient.getKind();
         Integer ingredientQuantity = currentIngredient.getAmount();
+        String ingredientUnit = currentIngredient.getUnit();
 
         //get and change it
         TextView name = view.findViewById(R.id.text_view_ingredient_name);
         TextView kind = view.findViewById(R.id.text_view_ingredient_kind);
         TextView quantity = view.findViewById(R.id.text_view_ingredient_quantity);
+        TextView unit = view.findViewById(R.id.text_view_ingredient_unit);
 
 
         name.setText(ingredientName);
         kind.setText(ingredientKind);
         quantity.setText(Integer.toString(ingredientQuantity));
+        unit.setText(ingredientUnit);
 
         //Init delete btn
         ImageButton deleteBtn = view.findViewById(R.id.button_remove_stock_ingredient);

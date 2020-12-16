@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="70dp"
+    android:padding="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -109,16 +109,22 @@
             android:layout_marginLeft="5dp">
         </TextView>
 
-        <EditText
+        <Spinner
             android:id="@+id/input_shopping_ingredient_type"
-            android:layout_width="wrap_content"
-            android:text="type"
-            android:minWidth="60dp"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:layout_below="@id/ingredient_unit"
+            android:layout_below="@+id/input_stock_ingredient_unit"
+            android:layout_alignBottom="@+id/ingredient_type"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="127dp"
+            android:layout_marginLeft="127dp"
             android:layout_marginTop="20dp"
-            android:layout_alignParentRight="true" />
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@+id/ingredient_type"
+            android:layout_toRightOf="@+id/ingredient_type" />
 
         <TextView
             android:id="@+id/ingredient_price"
