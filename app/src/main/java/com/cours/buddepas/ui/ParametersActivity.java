@@ -55,7 +55,10 @@ public class ParametersActivity extends AppCompatActivity {
         buttonSubmitParameters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                apiManager.SetUserData(new UserData(editTextUsername.getText().toString(), Integer.parseInt(editTextBudget.getText().toString())));
+                userData = singleton.getCurrentUserData();
+                userData.setUsername(editTextUsername.getText().toString());
+                userData.setBudget(Integer.parseInt(editTextBudget.getText().toString()));
+                apiManager.SetUserData(userData);
                 Toast.makeText(ParametersActivity.this, "Modification effectuée", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
