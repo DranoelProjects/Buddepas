@@ -16,6 +16,7 @@ import com.cours.buddepas.R;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.ui.ingredients.IngredientsListFragment;
+import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
 import com.google.android.gms.common.api.Api;
 
 import java.util.List;
@@ -44,25 +45,22 @@ public class IngredientAdapter extends BaseAdapter {
     public long getItemId(int i) { return 0; }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.ingredient_adapter,null);
 
         //get information about ingredient
         Ingredient currentIngredient=getItem(i);
         final String ingredientName = currentIngredient.getName();
-        String ingredientKind = currentIngredient.getKind();
         Integer ingredientQuantity = currentIngredient.getAmount();
         String ingredientUnit = currentIngredient.getUnit();
 
         //get and change it
         TextView name = view.findViewById(R.id.text_view_ingredient_name);
-        TextView kind = view.findViewById(R.id.text_view_ingredient_kind);
         TextView quantity = view.findViewById(R.id.text_view_ingredient_quantity);
         TextView unit = view.findViewById(R.id.text_view_ingredient_unit);
 
 
         name.setText(ingredientName);
-        kind.setText(ingredientKind);
         quantity.setText(Integer.toString(ingredientQuantity));
         unit.setText(ingredientUnit);
 
@@ -71,18 +69,7 @@ public class IngredientAdapter extends BaseAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                apiManager.DeleteIngredientStock(ingredientName);
-                Toast.makeText(context, ingredientName + " : ingrédient supprimé", Toast.LENGTH_SHORT).show();
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent myIntent = new Intent(context, MainActivity.class);
-                        context.startActivity(myIntent);
-                    }
-                }, 200);
-
+                IngredientsListFragment.RemoveIngredient(i);
             }
         });
 

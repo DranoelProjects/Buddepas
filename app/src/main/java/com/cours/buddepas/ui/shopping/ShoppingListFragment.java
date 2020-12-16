@@ -31,8 +31,8 @@ import java.util.ArrayList;
 public class ShoppingListFragment extends Fragment {
 
     //Instances
-    private ApiManager apiManager = ApiManager.getInstance();
-    private Singleton singleton = Singleton.getInstance();
+    private static ApiManager apiManager = ApiManager.getInstance();
+    private static Singleton singleton = Singleton.getInstance();
     private ShoppingListViewModel shoppingListViewModel;
     private String TAG = "ShoppingFragment";
 
@@ -42,7 +42,8 @@ public class ShoppingListFragment extends Fragment {
 
     //Ingredients
     private boolean loading = true;
-    ArrayList<Ingredient> ingredientsArrayList = new ArrayList();
+    static ArrayList<Ingredient> ingredientsArrayList = new ArrayList();
+    static ShoppingAdapter shoppingAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class ShoppingListFragment extends Fragment {
 
     private void init(View root) {
         textViewLoading = root.findViewById(R.id.ingredient_loading);
-        apiManager.GetAllShopping();
         listView = root.findViewById(R.id.list_view_shopping);
         new ShoppingListFragment.LoadingIngredientsListTask().execute();
 
@@ -77,13 +77,16 @@ public class ShoppingListFragment extends Fragment {
             while(loading){
                 loading = singleton.isLoading();
             }
-            ingredientsArrayList = singleton.getIngredientsArrayList();
+            ingredientsArrayList = singleton.getShoppingArrayList();
             return "Task Completed.";
         }
 
         @Override
         protected void onPostExecute(String result) {
-            listView.setAdapter(new ShoppingAdapter(getActivity(), ingredientsArrayList));
+            if(ingredientsArrayList != null) {
+                shoppingAdapter = new ShoppingAdapter(getActivity(), ingredientsArrayList);
+                listView.setAdapter(shoppingAdapter);
+            }
             textViewLoading.setVisibility(View.INVISIBLE);
         }
 
@@ -94,4 +97,11 @@ public class ShoppingListFragment extends Fragment {
         protected void onProgressUpdate(Integer... values) { }
     }
 
+    public static void RemoveIngredient(int position){
+        ingredientsArrayList.remove(position);
+        shoppingAdapter.notifyDataSetChanged();
+        UserData userData = singleton.getCurrentUserData();
+        userData.setShoppingArrayList(ingredientsArrayList);
+        apiManager.SetUserData(userData);
+    }
 };

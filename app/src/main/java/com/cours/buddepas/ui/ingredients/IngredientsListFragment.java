@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.IngredientAdapter;
+import com.cours.buddepas.adapters.ShoppingAdapter;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
@@ -31,8 +32,8 @@ import java.util.ArrayList;
 public class IngredientsListFragment extends Fragment {
 
     //Instances
-    private ApiManager apiManager = ApiManager.getInstance();
-    private Singleton singleton = Singleton.getInstance();
+    private static ApiManager apiManager = ApiManager.getInstance();
+    private  static Singleton singleton = Singleton.getInstance();
     private IngredientsListViewModel ingredientsListViewModel;
     private String TAG = "IngredientsFragment";
 
@@ -42,8 +43,8 @@ public class IngredientsListFragment extends Fragment {
 
     //Ingredients
     private boolean loading = true;
-    ArrayList<Ingredient> ingredientsArrayList = new ArrayList();
-    UserData userData;
+    static ArrayList<Ingredient> ingredientsArrayList = new ArrayList();
+    static IngredientAdapter ingredientAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +57,6 @@ public class IngredientsListFragment extends Fragment {
 
     private void init(View root) {
         textViewLoading = root.findViewById(R.id.ingredient_loading);
-        apiManager.GetAllIngredients();
         listView = root.findViewById(R.id.list_view_stock);
         new IngredientsListFragment.LoadingIngredientsListTask().execute();
 
@@ -84,7 +84,10 @@ public class IngredientsListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            listView.setAdapter(new IngredientAdapter(getActivity(), ingredientsArrayList));
+            if(ingredientsArrayList != null){
+                ingredientAdapter = new IngredientAdapter(getActivity(), ingredientsArrayList);
+                listView.setAdapter(ingredientAdapter);
+            }
             textViewLoading.setVisibility(View.INVISIBLE);
         }
 
@@ -95,4 +98,11 @@ public class IngredientsListFragment extends Fragment {
         protected void onProgressUpdate(Integer... values) { }
     }
 
+    public static void RemoveIngredient(int position){
+        ingredientsArrayList.remove(position);
+        ingredientAdapter.notifyDataSetChanged();
+        UserData userData = singleton.getCurrentUserData();
+        userData.setStockArrayList(ingredientsArrayList);
+        apiManager.SetUserData(userData);
+    }
 };

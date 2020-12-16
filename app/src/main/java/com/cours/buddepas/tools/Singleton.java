@@ -25,7 +25,6 @@ public class Singleton {
     private boolean filtered = false;
     private boolean activatedfilters = false;
     private Filter filter = new Filter();
-    private ArrayList<Ingredient> ingredientsArrayList = new ArrayList<>();
 
     //Instance
     private Singleton() {
@@ -120,11 +119,11 @@ public class Singleton {
     }
 
     public ArrayList<Ingredient> getIngredientsArrayList() {
-        return ingredientsArrayList;
+        return currentUserData.getStockArrayList();
     }
 
-    public void setIngredientsArrayList(ArrayList<Ingredient> ingredientsArrayList) {
-        this.ingredientsArrayList = ingredientsArrayList;
+    public ArrayList<Ingredient> getShoppingArrayList() {
+        return currentUserData.getShoppingArrayList();
     }
 
     public void setFilter(Filter f)

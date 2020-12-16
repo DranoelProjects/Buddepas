@@ -64,4 +64,15 @@ public class Ingredient {
     public void setKind(String kind) {
         this.kind = kind;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "kind='" + kind + '\'' +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", unit='" + unit + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

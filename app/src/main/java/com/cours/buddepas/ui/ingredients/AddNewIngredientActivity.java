@@ -18,6 +18,7 @@ import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
+import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
 import com.cours.buddepas.ui.recipe.AddNewRecipeActivity;
@@ -117,7 +118,14 @@ public class AddNewIngredientActivity extends AppCompatActivity {
         boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit});
 
         if(fieldsOK){
-            apiManager.AddNewIngredient(newIngredient);
+            UserData userData = singleton.getCurrentUserData();
+            ArrayList<Ingredient> stockArrayList = userData.getStockArrayList();
+            if(stockArrayList == null){
+                stockArrayList = new ArrayList<>();
+            }
+            stockArrayList.add(newIngredient);
+            userData.setStockArrayList(stockArrayList);
+            apiManager.SetUserData(userData);
             Toast.makeText(AddNewIngredientActivity.this, "Ingrédient ajouté", Toast.LENGTH_SHORT).show();
 
             final Handler handler = new Handler();

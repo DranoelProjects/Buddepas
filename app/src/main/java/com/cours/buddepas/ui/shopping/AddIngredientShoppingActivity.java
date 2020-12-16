@@ -18,9 +18,12 @@ import com.cours.buddepas.R;
 import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.Step;
+import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.Singleton;
 import com.cours.buddepas.ui.ingredients.AddNewIngredientActivity;
+
+import java.util.ArrayList;
 
 public class AddIngredientShoppingActivity extends AppCompatActivity {
     //Instances
@@ -116,7 +119,14 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
 
         boolean fieldsOK = validate(new EditText[]{ingredient_name, ingredient_quantity, ingredient_unit, ingredient_price});
         if(fieldsOK) {
-            apiManager.AddIngredientShopping(newIngredient);
+            UserData userData = singleton.getCurrentUserData();
+            ArrayList<Ingredient> shoppingArrayList = userData.getShoppingArrayList();
+            if(shoppingArrayList == null){
+                shoppingArrayList = new ArrayList<>();
+            }
+            shoppingArrayList.add(newIngredient);
+            userData.setShoppingArrayList(shoppingArrayList);
+            apiManager.SetUserData(userData);
             Toast.makeText(AddIngredientShoppingActivity.this, "Ingrédient ajouté à la liste de courses", Toast.LENGTH_SHORT).show();
 
             final Handler handler = new Handler();
