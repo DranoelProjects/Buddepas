@@ -127,22 +127,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/generaterecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="20dp"
+                android:text="@string/generate" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/generaterecipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/calendar_title_add_recipe"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="73dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Proposer une" />
     </RelativeLayout>
 
 

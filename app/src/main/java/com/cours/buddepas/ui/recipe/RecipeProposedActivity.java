@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
 import com.cours.buddepas.adapters.RecipeAdapter;
 import com.cours.buddepas.models.ProgrammedRecipe;
@@ -29,6 +30,7 @@ import com.cours.buddepas.models.UserData;
 import com.cours.buddepas.tools.ApiManager;
 import com.cours.buddepas.tools.GenerateRecipe;
 import com.cours.buddepas.tools.Singleton;
+import com.cours.buddepas.ui.calendar.AddProgrammedRecipeActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
@@ -85,7 +87,8 @@ public class RecipeProposedActivity extends AppCompatActivity {
                 userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
                 apiManager.SetUserData(userData);
                 Toast.makeText(RecipeProposedActivity.this, "Recette ajoutée", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent myIntent = new Intent(RecipeProposedActivity.this, MainActivity.class);
+                startActivity(myIntent);
             }
         });
 

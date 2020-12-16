@@ -216,8 +216,6 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
             }
         });
 
-
-
         btnPropose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -73,6 +73,8 @@
     <string name="dinner">Dîner</string>
     <string name="snacks">Autres</string>
     <string name="today">Aujourd\'hui</string>
+    <string name="generate">Générer une recette</string>
+    <string name="kind">Type</string>
     <string-array name="time_array">
         <item>Petit déjeuner</item>
         <item>Déjeuner</item>
