@@ -136,83 +136,87 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnSubmit.setEnabled(false);
-                btnCancel.setEnabled(false);
-                for (int i = 0; i < recipesArrayList.size(); i++)
-                {
-                    if (atvRecipes.getText().toString().toLowerCase().equals(recipesArrayList.get(i).getName().toLowerCase()))
+                if(!atvRecipes.getText().toString().isEmpty() && !inputPeopleNumber.getText().toString().isEmpty()){
+                    btnSubmit.setEnabled(false);
+                    btnCancel.setEnabled(false);
+                    for (int i = 0; i < recipesArrayList.size(); i++)
                     {
-                        recipeToAdd = recipesArrayList.get(i);
-                        break;
+                        if (atvRecipes.getText().toString().toLowerCase().equals(recipesArrayList.get(i).getName().toLowerCase()))
+                        {
+                            recipeToAdd = recipesArrayList.get(i);
+                            break;
+                        }
                     }
-                }
-                int number_people_initial = recipeToAdd.getPeopleNumber();
+                    int number_people_initial = recipeToAdd.getPeopleNumber();
 
-                //We need to change amount of ingredients before
-                String myFormat = "dd-MM-yyyy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
-                programmedRecipe.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
+                    //We need to change amount of ingredients before
+                    String myFormat = "dd-MM-yyyy"; //In which you need put here
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    programmedRecipe = new ProgrammedRecipe(recipeToAdd, sdf.format(myCalendar.getTime()), spinner.getSelectedItem().toString());
+                    programmedRecipe.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
 
-                ArrayList<Ingredient> ingredientArrayList = programmedRecipe.getIngredientsArrayList();
-                for(int i = 0; i<programmedRecipe.getIngredientsArrayList().size(); i++){
-                    Ingredient ingredient = ingredientArrayList.get(i);
-                    ingredient.setAmount(ingredient.getAmount() * programmedRecipe.getPeopleNumber()/number_people_initial);
-                    ingredientArrayList.set(i, ingredient);
-                }
-                programmedRecipe.setIngredientsArrayList(ingredientArrayList);
+                    ArrayList<Ingredient> ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                    for(int i = 0; i<programmedRecipe.getIngredientsArrayList().size(); i++){
+                        Ingredient ingredient = ingredientArrayList.get(i);
+                        ingredient.setAmount(ingredient.getAmount() * programmedRecipe.getPeopleNumber()/number_people_initial);
+                        ingredientArrayList.set(i, ingredient);
+                    }
+                    programmedRecipe.setIngredientsArrayList(ingredientArrayList);
 
-                userData = singleton.getCurrentUserData();
+                    userData = singleton.getCurrentUserData();
 
-                ArrayList<Ingredient> stockIngredients = userData.getStockArrayList();
-                ArrayList<Ingredient> shoppingIngredients = userData.getShoppingArrayList();
+                    ArrayList<Ingredient> stockIngredients = userData.getStockArrayList();
+                    ArrayList<Ingredient> shoppingIngredients = userData.getShoppingArrayList();
 
-                if(shoppingIngredients == null){
-                    shoppingIngredients = new ArrayList<Ingredient>();
-                }
+                    if(shoppingIngredients == null){
+                        shoppingIngredients = new ArrayList<Ingredient>();
+                    }
 
-                ingredientArrayList = programmedRecipe.getIngredientsArrayList();
-                for(int i=0; i<ingredientArrayList.size(); i++){
-                    if(stockIngredients != null){
-                        if(stockIngredients.contains(ingredientArrayList.get(i).getName())) {
-                            Ingredient currentIngredient = stockIngredients.get(i);
+                    ingredientArrayList = programmedRecipe.getIngredientsArrayList();
+                    for(int i=0; i<ingredientArrayList.size(); i++){
+                        if(stockIngredients != null){
+                            if(stockIngredients.contains(ingredientArrayList.get(i).getName())) {
+                                Ingredient currentIngredient = stockIngredients.get(i);
 
-                            if (currentIngredient.getAmount() < ingredientArrayList.get(i).getAmount()) {
-                                currentIngredient.setAmount(ingredientArrayList.get(i).getAmount() - currentIngredient.getAmount());
+                                if (currentIngredient.getAmount() < ingredientArrayList.get(i).getAmount()) {
+                                    currentIngredient.setAmount(ingredientArrayList.get(i).getAmount() - currentIngredient.getAmount());
+                                }
+                                shoppingIngredients.add(currentIngredient);
+                            } else {
+                                shoppingIngredients.add(ingredientArrayList.get(i));
                             }
-                            shoppingIngredients.add(currentIngredient);
-                        } else {
+                        }
+                        else{
                             shoppingIngredients.add(ingredientArrayList.get(i));
                         }
                     }
-                    else{
-                        shoppingIngredients.add(ingredientArrayList.get(i));
-                    }
-                }
 
-                if(userData == null){
-                    userData = new UserData();
-                }
-                else if(userData.getProgrammedRecipeArrayList() != null){
-                    programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
-                    programmedRecipeArrayList.add(programmedRecipe);
-                } else {
-                    programmedRecipeArrayList.add(programmedRecipe);
-                }
-                userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
-                userData.setShoppingArrayList(shoppingIngredients);
-                apiManager.SetUserData(userData);
-
-                Toast.makeText(AddProgrammedRecipeActivity.this, "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                        Intent myIntent = new Intent(AddProgrammedRecipeActivity.this, MainActivity.class);
-                        startActivity(myIntent);
+                    if(userData == null){
+                        userData = new UserData();
                     }
-                }, 1000);
+                    else if(userData.getProgrammedRecipeArrayList() != null){
+                        programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
+                        programmedRecipeArrayList.add(programmedRecipe);
+                    } else {
+                        programmedRecipeArrayList.add(programmedRecipe);
+                    }
+                    userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
+                    userData.setShoppingArrayList(shoppingIngredients);
+                    apiManager.SetUserData(userData);
+
+                    Toast.makeText(AddProgrammedRecipeActivity.this, "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                            Intent myIntent = new Intent(AddProgrammedRecipeActivity.this, MainActivity.class);
+                            startActivity(myIntent);
+                        }
+                    }, 1000);
+                }else {
+                    Toast.makeText(AddProgrammedRecipeActivity.this , "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
