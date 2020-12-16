@@ -27,6 +27,6 @@
         android:id="@+id/navigation_ingredients_list"
         android:name="com.cours.buddepas.ui.ingredients.IngredientsListFragment"
         android:label="@string/title_ingredients_list"
-        tools:layout="@layout/fragment_shopping_list" />
+        tools:layout="@layout/fragment_ingredients_list" />
 
 </navigation>

@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +31,8 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
     private EditText ingredient_name;
     private EditText ingredient_quantity;
     private EditText ingredient_unit;
-    private EditText ingredient_type;
+    private Spinner ingredient_type;
+    private String type = "";
     private EditText ingredient_price;
     private Button cancel;
     private Button submitIngredient;
@@ -50,6 +54,23 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel_new_ingredient);
         submitIngredient = findViewById(R.id.submit_new_ingredient);
 
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> kindadapter = ArrayAdapter.createFromResource(this, R.array.select_apport, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        kindadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        ingredient_type.setAdapter(kindadapter);
+
+        ingredient_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                type = (String) parent.getItemAtPosition(pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                type = "Féculent";
+            }
+        });
 
         //Init buttons
         //cancel action
@@ -86,7 +107,7 @@ public class AddIngredientShoppingActivity extends AppCompatActivity {
         }
 
         Ingredient newIngredient = new Ingredient(
-                ingredient_type.getText().toString(),
+                type,
                 ingredient_name.getText().toString(),
                 Integer.valueOf(ingredient_quantity.getText().toString()),
                 ingredient_unit.getText().toString(),
