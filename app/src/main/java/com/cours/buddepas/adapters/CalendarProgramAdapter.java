@@ -137,13 +137,18 @@ public class CalendarProgramAdapter extends RecyclerView.Adapter<CalendarProgram
             tomorrow.add(Calendar.DATE, 1);
             String tomorrowDate = sdf.format(tomorrow.getTime());
 
-            if (dayRecipesList.get(0).getDate().equals(todayDate)){
-                date.setText("Aujourd'hui");
-            } else if (dayRecipesList.get(0).getDate().equals(tomorrowDate)) {
-                date.setText("Demain");
-            } else{
-                date.setText(dayRecipesList.get(0).getDate());
+            if(dayRecipesList.size() !=0){
+                if (dayRecipesList.get(0).getDate().equals(todayDate)){
+                    date.setText("Aujourd'hui");
+                } else if (dayRecipesList.get(0).getDate().equals(tomorrowDate)) {
+                    date.setText("Demain");
+                } else{
+                    date.setText(dayRecipesList.get(0).getDate());
+                }
+            } else {
+                date.setVisibility(View.GONE);
             }
+
             breakFast.clear();
             lunch.clear();
             afternoonSnack.clear();
