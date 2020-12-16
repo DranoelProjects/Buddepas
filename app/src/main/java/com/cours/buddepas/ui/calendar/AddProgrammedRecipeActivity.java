@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cours.buddepas.MainActivity;
 import com.cours.buddepas.R;
+import com.cours.buddepas.models.Ingredient;
 import com.cours.buddepas.models.ProgrammedRecipe;
 import com.cours.buddepas.models.Recipe;
 import com.cours.buddepas.models.UserData;
@@ -148,7 +150,33 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                int number_people_initial = recipeToAdd.getPeopleNumber();
                 recipeToAdd.setPeopleNumber(Integer.valueOf(inputPeopleNumber.getText().toString()));
+
+                ArrayList<Ingredient> ingredientArrayList = recipeToAdd.getIngredientsArrayList();
+                for(int i = 0; i<recipeToAdd.getIngredientsArrayList().size(); i++){
+                    Ingredient ingredient = ingredientArrayList.get(i);
+                    ingredient.setAmount(ingredient.getAmount() * recipeToAdd.getPeopleNumber()/number_people_initial);
+                    ingredientArrayList.set(i, ingredient);
+                }
+                recipeToAdd.setIngredientsArrayList(ingredientArrayList);
+
+                ArrayList<Ingredient> stockIngredients = apiManager.GetAllIngredientsinArray();
+                ingredientArrayList = recipeToAdd.getIngredientsArrayList();
+                for(int i=0; i<ingredientArrayList.size(); i++){
+                    if(stockIngredients.contains(ingredientArrayList.get(i).getName())){
+                        int currentIngredientIndex = stockIngredients.indexOf(ingredientArrayList.get(i).getName());
+                        Ingredient currentIngredient = stockIngredients.get(currentIngredientIndex);
+
+                        if(currentIngredient.getAmount() < ingredientArrayList.get(i).getAmount()){
+                            currentIngredient.setAmount(ingredientArrayList.get(i).getAmount() - currentIngredient.getAmount());
+                        }
+                        Log.d(TAG,"je suis passé par ici");
+                    }
+                    else{
+                        apiManager.AddIngredientShopping(ingredientArrayList.get(i));
+                    }
+                }
 
                 //We need to change amount of ingredients before
                 String myFormat = "dd-MM-yyyy"; //In which you need put here
@@ -157,8 +185,9 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                 userData = singleton.getCurrentUserData();
                 if(userData == null){
                     userData = new UserData();
+                    Log.d(TAG, "new userdata");
                 }
-                if(userData.getProgrammedRecipeArrayList() != null){
+                else if(userData.getProgrammedRecipeArrayList() != null){
                     programmedRecipeArrayList = userData.getProgrammedRecipeArrayList();
                     programmedRecipeArrayList.add(programmedRecipe);
                 } else {
@@ -166,6 +195,7 @@ public class AddProgrammedRecipeActivity extends AppCompatActivity {
                 }
                 userData.setProgrammedRecipeArrayList(programmedRecipeArrayList);
                 apiManager.SetUserData(userData);
+
                 Toast.makeText(AddProgrammedRecipeActivity.this, "Recette : "+ programmedRecipe.getName()+" ajoutée", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {

@@ -158,6 +158,29 @@ public class ApiManager {
         });
     }
 
+    public ArrayList<Ingredient> GetAllIngredientsinArray(){
+        final List<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();
+        singleton.setLoading(true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ingredientsRef = database.getReference("users/" + user.getUid() +"/Ingredients");
+        ingredientsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataValues : dataSnapshot.getChildren()) {
+                    Ingredient ingredient = dataValues.getValue(Ingredient.class);
+                    ingredientsArrayList.add(ingredient);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return (ArrayList<Ingredient>) ingredientsArrayList;
+    }
+
     public void AddNewIngredient(Ingredient ingredient){
         //adding new recipe to database
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -206,4 +229,6 @@ public class ApiManager {
         DatabaseReference userRef = database.getReference().child("users/"+user.getUid());
         userRef.child("Shopping/" + ingredientName).removeValue();
     }
+
+
 }
